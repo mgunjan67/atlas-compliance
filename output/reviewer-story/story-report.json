@@ -1,0 +1,296 @@
+{
+  "simulated": true,
+  "before": {
+    "counts": {
+      "NON_COMPLIANT": 21,
+      "REVIEW_REQUIRED": 16,
+      "COMPLIANT": 11
+    },
+    "estimated_weekly_shortfall": "3148.80",
+    "employees_with_weekly_estimate": 32,
+    "total": 48
+  },
+  "pending": {
+    "counts": {
+      "NON_COMPLIANT": 10,
+      "REVIEW_REQUIRED": 32,
+      "COMPLIANT": 6
+    },
+    "estimated_weekly_shortfall": "935.30",
+    "employees_with_weekly_estimate": 16,
+    "total": 48
+  },
+  "after": {
+    "counts": {
+      "NON_COMPLIANT": 23,
+      "REVIEW_REQUIRED": 16,
+      "COMPLIANT": 9
+    },
+    "estimated_weekly_shortfall": "3886.08",
+    "employees_with_weekly_estimate": 32,
+    "total": 48
+  },
+  "impact_preview": {
+    "candidate_id": "0bd8fc13e310929dcc0b7385edf02f280471a48ee53bfbbfc61a03df5ac3a19a",
+    "evaluation_date": "2026-09-24",
+    "preview_only": true,
+    "basis": "Before excludes only this proposal; after hypothetically approves it. Other unresolved cases stay blocked.",
+    "affected_employees": 24,
+    "unaffected_employees": 24,
+    "before": {
+      "counts": {
+        "COMPLIANT": 5,
+        "REVIEW_REQUIRED": 8,
+        "NON_COMPLIANT": 11
+      },
+      "estimated_weekly_shortfall": "2213.50",
+      "employees_with_weekly_estimate": 16,
+      "total": 24
+    },
+    "after": {
+      "counts": {
+        "NON_COMPLIANT": 13,
+        "REVIEW_REQUIRED": 8,
+        "COMPLIANT": 3
+      },
+      "estimated_weekly_shortfall": "2950.78",
+      "employees_with_weekly_estimate": 16,
+      "total": 24
+    },
+    "current_with_pending": {
+      "counts": {
+        "REVIEW_REQUIRED": 24
+      },
+      "estimated_weekly_shortfall": "0.00",
+      "employees_with_weekly_estimate": 0,
+      "total": 24
+    },
+    "weekly_shortfall_delta": "737.28",
+    "comparability_note": "Delta covers supported estimates only; compare coverage counts as well as totals.",
+    "changes": [
+      {
+        "employee_id": "AST-0025",
+        "before": "COMPLIANT",
+        "after": "NON_COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "0.00",
+        "weekly_after": "47.20"
+      },
+      {
+        "employee_id": "AST-0026",
+        "before": "COMPLIANT",
+        "after": "NON_COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "0.00",
+        "weekly_after": "15.00"
+      },
+      {
+        "employee_id": "AST-0028",
+        "before": "COMPLIANT",
+        "after": "COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "0.00",
+        "weekly_after": "0.00"
+      },
+      {
+        "employee_id": "AST-0029",
+        "before": "COMPLIANT",
+        "after": "COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "0.00",
+        "weekly_after": "0.00"
+      },
+      {
+        "employee_id": "AST-0031",
+        "before": "COMPLIANT",
+        "after": "COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "0.00",
+        "weekly_after": "0.00"
+      },
+      {
+        "employee_id": "AST-0032",
+        "before": "NON_COMPLIANT",
+        "after": "NON_COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "297.60",
+        "weekly_after": "357.44"
+      },
+      {
+        "employee_id": "AST-0034",
+        "before": "NON_COMPLIANT",
+        "after": "NON_COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "316.50",
+        "weekly_after": "386.63"
+      },
+      {
+        "employee_id": "AST-0035",
+        "before": "NON_COMPLIANT",
+        "after": "NON_COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "320.40",
+        "weekly_after": "395.20"
+      },
+      {
+        "employee_id": "AST-0037",
+        "before": "NON_COMPLIANT",
+        "after": "NON_COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "228.80",
+        "weekly_after": "288.64"
+      },
+      {
+        "employee_id": "AST-0038",
+        "before": "NON_COMPLIANT",
+        "after": "NON_COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "235.20",
+        "weekly_after": "300.65"
+      },
+      {
+        "employee_id": "AST-0040",
+        "before": "NON_COMPLIANT",
+        "after": "NON_COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "234.40",
+        "weekly_after": "309.20"
+      },
+      {
+        "employee_id": "AST-0041",
+        "before": "NON_COMPLIANT",
+        "after": "NON_COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "108.60",
+        "weekly_after": "146.00"
+      },
+      {
+        "employee_id": "AST-0043",
+        "before": "NON_COMPLIANT",
+        "after": "NON_COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "159.95",
+        "weekly_after": "225.40"
+      },
+      {
+        "employee_id": "AST-0044",
+        "before": "NON_COMPLIANT",
+        "after": "NON_COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "155.25",
+        "weekly_after": "225.38"
+      },
+      {
+        "employee_id": "AST-0046",
+        "before": "NON_COMPLIANT",
+        "after": "NON_COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "65.60",
+        "weekly_after": "103.00"
+      },
+      {
+        "employee_id": "AST-0047",
+        "before": "NON_COMPLIANT",
+        "after": "NON_COMPLIANT",
+        "floor_before": "16.63",
+        "floor_after": "18.50",
+        "weekly_before": "91.20",
+        "weekly_after": "151.04"
+      }
+    ],
+    "simulated": true
+  },
+  "jobs": [
+    {
+      "job_id": "33aab5f2668a69bbab80c04f2e2110721a28f6d59f94ed27dc3e1e7a659db9b0",
+      "state": "DONE",
+      "employee_population": 24,
+      "evaluations": 24,
+      "dates": [
+        "2026-09-24"
+      ],
+      "evaluation_ids": [
+        "2bf11718615c27b295aa050271b16fd18edb1e500179977892b7fb9f17775637",
+        "2b9dc580c1197b064dc9e00e2ed0a33393afb7bc4da4be24357a3a05f0f6a27d",
+        "143ccc342a4791b00c7bad484a5f4cb90d4e764f4d7b799a1ca7f409a06b4253",
+        "08cf976a77391b23737ad9654cceff7dc4f2593393f348182e84ddfb1dffcde1",
+        "adc7fe2ae553d6199c6bc77d4c28595a9fceb21f67e45894713e987864ac6358",
+        "a2eb22b33c04430a39a3d4230496e2d82fabfcb6a55bd9c2aeadb2250603a4c8",
+        "61bd145fce629bf31fc6d4c0a405e37ff186073a8a3171b3c7a74c6777bd334c",
+        "53473184d730dc3c77451816f8f6a25f73bbe65caa7291c96da06dcc26fb43ce",
+        "506bbbcf16cd0fa5d6da6943550b322554e8e9899a9db844f37d314a13c7f7d3",
+        "55adbf28337f90bed9e0c8338c6597d98403a6d1fe89831c77e84c1fb2a116e9",
+        "ee27f9087793df5ec635f999b59b28b1c178d48c563bf0c05c161ecc5d2ec9c6",
+        "5cad6e3cd753b4709633bd602f4a1728a961855bdf5f787c10c145b689a969e0",
+        "1ff5200fccffcc2b82d9114f7a6bd2f20b06a43329a0d69047d2c40ad37b32ce",
+        "c28a35095b31bf38ceadf9c7c3e439c8ca58c10b3971d86458951ee956e335bb",
+        "32abf50a80c7d767c3f765504f7e4819342c6aad82df897bfd6164302c518041",
+        "809ef02d649fce542a1ad76e6d71f4377885e576acaa73b896809b974da6be90",
+        "f08edb56e3721873ea7323d173741157f1ff6f53fe11c29e7d2d752e7d20fd5e",
+        "eba01117c2b89c7c12aa81873eb0f75fc93899b517c84439adc91e02ee7ccc9a",
+        "fe09585e8d5c39a47b814dbad98a32b955a5a0232b15cd453fd52bef05b25541",
+        "d426f4a7220ab3be205a800854ea3fa19e1e814bc0bf1509884569b3b1c527a1",
+        "dbbf94227d2ef6f622b8bb7c5bd34d771f904c9aa03404b3cce1a74879f06c71",
+        "96a1d0c919aed340f3dcfa01b92a829db49d9e4d5312c1508f7d3b21114cfe05",
+        "4526c64904ea9c8148f7479961f5eab24747321580dffeff48ef5c9171575531",
+        "f3dca2955824ac1110802ea28e311fec540aaab34d546eb2cfa2f267dfab3888"
+      ],
+      "limitation": "Historical backfill covers stored evaluations only; unobserved employee history is not invented."
+    }
+  ],
+  "original_receipt_after_correction": {
+    "valid": true,
+    "errors": [],
+    "receipt_sha256": "7dc5c55fb1039394942e2ced45e35a33b9477aace270c73af8cce77dba850b35",
+    "external_digest_checked": false,
+    "checks": [
+      "bundle checksum",
+      "source hashes",
+      "rule-to-source binding",
+      "matching engine",
+      "deterministic decision replay"
+    ]
+  },
+  "corrected_receipt": {
+    "valid": true,
+    "errors": [],
+    "receipt_sha256": "6ed62597004d83fd4d52dd18e94cb3978e0a0c19e639a86e242fa1381dcaa812",
+    "external_digest_checked": false,
+    "checks": [
+      "bundle checksum",
+      "source hashes",
+      "rule-to-source binding",
+      "matching engine",
+      "deterministic decision replay"
+    ]
+  },
+  "historical_knowledge_reproduced": true,
+  "audit_integrity": {
+    "valid": true,
+    "events_checked": 261,
+    "head": "a57f755fe5b576d3b962e5b6de31c594968496ec8b28785b0da731e6fb3078be",
+    "limitation": "Local hash chain detects changes relative to a trusted checkpoint; it is not a signature or external notarization."
+  },
+  "case_study": {
+    "employee_id": "AST-0025",
+    "before": "COMPLIANT",
+    "after": "NON_COMPLIANT",
+    "weekly_shortfall": "47.20"
+  },
+  "disclosure": "Captured source pages + synthetic correction + simulated approvals. Employee dataset is the supplied fictional dataset."
+}

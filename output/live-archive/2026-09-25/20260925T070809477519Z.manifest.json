@@ -1,0 +1,32 @@
+{
+  "checked_at": "2026-09-25T07:08:09.477519+00:00",
+  "evaluation_date": "2026-09-25",
+  "source_checks": [
+    {
+      "source": "federal",
+      "status": "UNCHANGED",
+      "snapshot_id": "c9a27e4de1865f80ae626066172041d17e6cd23abdd5d43ab95ce0a2e6230885",
+      "new_candidates": []
+    },
+    {
+      "source": "bellwether",
+      "status": "UNCHANGED",
+      "snapshot_id": "68017323f3abd84dfeae9124b829900dfe4f27c53cf92244eefd5452f0b0dde6",
+      "new_candidates": []
+    }
+  ],
+  "jobs": [],
+  "summary": {
+    "counts": {
+      "REVIEW_REQUIRED": 48
+    },
+    "estimated_weekly_shortfall": "0.00",
+    "employees_with_weekly_estimate": 0,
+    "total": 48
+  },
+  "archive_files_sha256": {
+    "20260925T070809477519Z.json": "63a583c23c399f3e9bc5bcf0dfc2f5cbedd7dac73d57401604a35a46bb98287d",
+    "20260925T070809477519Z.csv": "714e79c72f8eee7a56a06d72a0f3c62c63e74b105f4d741d0709d9f02ac1995d"
+  },
+  "meaning": "Captured and evaluated source state. Proposed rates remain unapproved until human review."
+}

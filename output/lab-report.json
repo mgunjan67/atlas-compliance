@@ -1,0 +1,243 @@
+{
+  "report_version": "lab-v2",
+  "simulated": true,
+  "golden_cases": [
+    {
+      "id": "state-floor",
+      "title": "State floor beats federal floor",
+      "expected": "NON_COMPLIANT",
+      "actual": "NON_COMPLIANT",
+      "pass": true,
+      "explanation": [
+        "Select latest approved effective rule per jurisdiction; apply highest floor. Equality passes. Amounts compared before rounding.",
+        "Weekly estimate uses scheduled hours, not actual historical hours; not a payroll liability total.",
+        "Hourly wage 15.00 AST compared with 16.00 AST/hour."
+      ],
+      "reason_code": "BELOW_APPROVED_FLOOR"
+    },
+    {
+      "id": "federal-floor",
+      "title": "Federal floor can beat state floor",
+      "expected": "NON_COMPLIANT",
+      "actual": "NON_COMPLIANT",
+      "pass": true,
+      "explanation": [
+        "Select latest approved effective rule per jurisdiction; apply highest floor. Equality passes. Amounts compared before rounding.",
+        "Weekly estimate uses scheduled hours, not actual historical hours; not a payroll liability total.",
+        "Hourly wage 17.00 AST compared with 18.00 AST/hour."
+      ],
+      "reason_code": "BELOW_APPROVED_FLOOR"
+    },
+    {
+      "id": "equality",
+      "title": "Equality at the threshold passes",
+      "expected": "COMPLIANT",
+      "actual": "COMPLIANT",
+      "pass": true,
+      "explanation": [
+        "Select latest approved effective rule per jurisdiction; apply highest floor. Equality passes. Amounts compared before rounding.",
+        "Weekly estimate uses scheduled hours, not actual historical hours; not a payroll liability total.",
+        "Hourly wage 16.00 AST compared with 16.00 AST/hour."
+      ],
+      "reason_code": "MEETS_APPROVED_FLOOR"
+    },
+    {
+      "id": "missing-state",
+      "title": "Missing state rule cannot silently fall back",
+      "expected": "INSUFFICIENT_DATA",
+      "actual": "INSUFFICIENT_DATA",
+      "pass": true,
+      "explanation": [
+        "No approved rule for Bellwether on this date."
+      ],
+      "reason_code": "MISSING_INPUT_OR_RULE"
+    },
+    {
+      "id": "missing-pay",
+      "title": "Missing wage never passes",
+      "expected": "INSUFFICIENT_DATA",
+      "actual": "INSUFFICIENT_DATA",
+      "pass": true,
+      "explanation": [
+        "Pay input: Missing or invalid numeric value"
+      ],
+      "reason_code": "MISSING_INPUT_OR_RULE"
+    },
+    {
+      "id": "future-rule",
+      "title": "A future publication must not activate early",
+      "expected": "COMPLIANT",
+      "actual": "COMPLIANT",
+      "pass": true,
+      "explanation": [
+        "Select latest approved effective rule per jurisdiction; apply highest floor. Equality passes. Amounts compared before rounding.",
+        "Weekly estimate uses scheduled hours, not actual historical hours; not a payroll liability total.",
+        "Hourly wage 15.00 AST compared with 14.00 AST/hour."
+      ],
+      "reason_code": "MEETS_APPROVED_FLOOR"
+    },
+    {
+      "id": "pending",
+      "title": "A proposed current rate cannot silently activate",
+      "expected": "REVIEW_REQUIRED",
+      "actual": "REVIEW_REQUIRED",
+      "pass": true,
+      "explanation": [
+        "Unresolved relevant source content: S"
+      ],
+      "reason_code": "PENDING_SOURCE_REVIEW"
+    },
+    {
+      "id": "same-date-conflict",
+      "title": "Conflicting approved versions require review",
+      "expected": "REVIEW_REQUIRED",
+      "actual": "REVIEW_REQUIRED",
+      "pass": true,
+      "explanation": [
+        "Conflicting approved rules for Bellwether with the same effective date."
+      ],
+      "reason_code": "CONFLICTING_APPROVED_RULES"
+    },
+    {
+      "id": "correction",
+      "title": "Explicit correction supersedes the old version",
+      "expected": "COMPLIANT",
+      "actual": "COMPLIANT",
+      "pass": true,
+      "explanation": [
+        "Select latest approved effective rule per jurisdiction; apply highest floor. Equality passes. Amounts compared before rounding.",
+        "Weekly estimate uses scheduled hours, not actual historical hours; not a payroll liability total.",
+        "Hourly wage 15.00 AST compared with 14.00 AST/hour."
+      ],
+      "reason_code": "MEETS_APPROVED_FLOOR"
+    },
+    {
+      "id": "expired",
+      "title": "Missing daily evidence never becomes a pass",
+      "expected": "INSUFFICIENT_DATA",
+      "actual": "INSUFFICIENT_DATA",
+      "pass": true,
+      "explanation": [
+        "Latest Asteria rate expired; do not extrapolate a daily rate or fall back to an older rule."
+      ],
+      "reason_code": "MISSING_INPUT_OR_RULE"
+    },
+    {
+      "id": "salary",
+      "title": "Unsupported salary conversion stays visible",
+      "expected": "REVIEW_REQUIRED",
+      "actual": "REVIEW_REQUIRED",
+      "pass": true,
+      "explanation": [
+        "No authority supplied for converting annual salary to an hourly compliance wage."
+      ],
+      "reason_code": "SALARY_CONVERSION_UNAPPROVED"
+    },
+    {
+      "id": "future-start",
+      "title": "Active status with future start is inconsistent",
+      "expected": "REVIEW_REQUIRED",
+      "actual": "REVIEW_REQUIRED",
+      "pass": true,
+      "explanation": [
+        "Active status conflicts with start date after evaluation date: 2027-01-01"
+      ],
+      "reason_code": "FUTURE_START_CONFLICT"
+    },
+    {
+      "id": "injection",
+      "title": "Quarantined source text cannot produce a pass",
+      "expected": "REVIEW_REQUIRED",
+      "actual": "REVIEW_REQUIRED",
+      "pass": true,
+      "explanation": [
+        "Unresolved relevant source content: ATTACK"
+      ],
+      "reason_code": "PENDING_SOURCE_REVIEW"
+    },
+    {
+      "id": "outage",
+      "title": "A source outage does not mean no rule change",
+      "expected": "REVIEW_REQUIRED",
+      "actual": "REVIEW_REQUIRED",
+      "pass": true,
+      "explanation": [
+        "Source freshness/availability: source unavailable"
+      ],
+      "reason_code": "SOURCE_HEALTH_REVIEW"
+    },
+    {
+      "id": "rounding",
+      "title": "Subcent shortfall must not round into compliance",
+      "expected": "NON_COMPLIANT",
+      "actual": "NON_COMPLIANT",
+      "pass": true,
+      "explanation": [
+        "Select latest approved effective rule per jurisdiction; apply highest floor. Equality passes. Amounts compared before rounding.",
+        "Weekly estimate uses scheduled hours, not actual historical hours; not a payroll liability total.",
+        "Hourly wage 15.999 AST compared with 16.00 AST/hour."
+      ],
+      "reason_code": "BELOW_APPROVED_FLOOR"
+    },
+    {
+      "id": "nan",
+      "title": "NaN is rejected before arithmetic",
+      "expected": "INSUFFICIENT_DATA",
+      "actual": "INSUFFICIENT_DATA",
+      "pass": true,
+      "explanation": [
+        "Pay input: Invalid nonnegative number"
+      ],
+      "reason_code": "MISSING_INPUT_OR_RULE"
+    }
+  ],
+  "oracle": {
+    "seed": 20260924,
+    "cases": 1000,
+    "passed": 1000,
+    "failures": [],
+    "scope": "Supported two-jurisdiction, integer-cent hourly cases; not legal correctness or general extraction accuracy."
+  },
+  "mutations": [
+    {
+      "mutation": "choose-lower-floor",
+      "detected": true,
+      "caught_by": [
+        "state-floor",
+        "federal-floor",
+        "rounding"
+      ]
+    },
+    {
+      "mutation": "fail-equality",
+      "detected": true,
+      "caught_by": [
+        "equality"
+      ]
+    },
+    {
+      "mutation": "activate-future-early",
+      "detected": true,
+      "caught_by": [
+        "future-rule"
+      ]
+    },
+    {
+      "mutation": "ignore-daily-expiry",
+      "detected": true,
+      "caught_by": [
+        "expired"
+      ]
+    },
+    {
+      "mutation": "missing-state-fallback",
+      "detected": true,
+      "caught_by": [
+        "missing-state"
+      ]
+    }
+  ],
+  "injection_fixture_quarantined": true,
+  "all_pass": true,
+  "disclosure": "Curated synthetic cases and generated arithmetic checks. No live model accuracy, unseen benchmark or comprehensive security claim."
+}

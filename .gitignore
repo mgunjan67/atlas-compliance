@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+data/*.sqlite3*
+data/employees-source-backup.csv
+.env
+docs/rebuild-review.md
+output/*
+!output/reviewer-story/
+!output/lab-report.json
+!output/live-archive/
+output/live-archive/**
+!output/live-archive/2026-09-25/
+!output/live-archive/2026-09-25/20260925T070809477519Z.json
+!output/live-archive/2026-09-25/20260925T070809477519Z.csv
+!output/live-archive/2026-09-25/20260925T070809477519Z.manifest.json

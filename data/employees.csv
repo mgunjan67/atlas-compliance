@@ -1,0 +1,49 @@
+employee_id,work_country,work_state,work_location_code,pay_basis,hourly_rate_ast,annual_salary_ast,scheduled_hours_per_week,currency,employment_status,minimum_wage_coverage,start_date
+AST-0001,Asteria,Federal Territory,FT-1,Hourly,7,,20,AST,Active,Covered,44927
+AST-0002,Asteria,Federal Territory,FT-2,Hourly,7.43,,32,AST,Active,Covered,45324
+AST-0003,Asteria,Federal Territory,FT-3,Annual Salary,,14906,35,AST,Active,Covered,45719
+AST-0004,Asteria,Federal Territory,FT-1,Hourly,8.29,,37.5,AST,Active,Covered,46116
+AST-0005,Asteria,Federal Territory,FT-2,Hourly,8.72,,40,AST,Active,Covered,45051
+AST-0006,Asteria,Federal Territory,FT-3,Annual Salary,,9984,20,AST,Active,Covered,45449
+AST-0007,Asteria,Federal Territory,FT-1,Hourly,9.58,,32,AST,Active,Covered,45845
+AST-0008,Asteria,Federal Territory,FT-2,Hourly,10.01,,35,AST,Active,Covered,46242
+AST-0009,Asteria,Federal Territory,FT-3,Annual Salary,,21470,37.5,AST,Active,Covered,45178
+AST-0010,Asteria,Federal Territory,FT-1,Hourly,10.87,,40,AST,Active,Covered,45575
+AST-0011,Asteria,Federal Territory,FT-2,Hourly,11.3,,20,AST,Active,Covered,45972
+AST-0012,Asteria,Federal Territory,FT-3,Annual Salary,,20667,32,AST,Active,Covered,46368
+AST-0013,Asteria,Federal Territory,FT-1,Hourly,12.16,,35,AST,Active,Covered,44939
+AST-0014,Asteria,Federal Territory,FT-2,Hourly,12.59,,37.5,AST,Active,Covered,45336
+AST-0015,Asteria,Federal Territory,FT-3,Annual Salary,,28766,40,AST,Active,Covered,45731
+AST-0016,Asteria,Federal Territory,FT-1,Hourly,13.45,,20,AST,Active,Covered,46128
+AST-0017,Asteria,Federal Territory,FT-2,Hourly,13.88,,32,AST,Active,Covered,45063
+AST-0018,Asteria,Federal Territory,FT-3,Annual Salary,,27737,35,AST,Active,Covered,45461
+AST-0019,Asteria,Federal Territory,FT-1,Hourly,14.74,,37.5,AST,Active,Covered,45857
+AST-0020,Asteria,Federal Territory,FT-2,Hourly,15.17,,40,AST,Active,Covered,46254
+AST-0021,Asteria,Federal Territory,FT-3,Annual Salary,,17316,20,AST,Active,Covered,45170
+AST-0022,Asteria,Federal Territory,FT-1,Hourly,16.03,,32,AST,Active,Covered,45567
+AST-0023,Asteria,Federal Territory,FT-2,Hourly,16.46,,35,AST,Active,Covered,45964
+AST-0024,Asteria,Federal Territory,FT-3,Annual Salary,,35217,37.5,AST,Active,Covered,46360
+AST-0025,Asteria,Bellwether,BW-1,Hourly,17.32,,40,AST,Active,Covered,44931
+AST-0026,Asteria,Bellwether,BW-2,Hourly,17.75,,20,AST,Active,Covered,45328
+AST-0027,Asteria,Bellwether,BW-3,Annual Salary,,32398,32,AST,Active,Covered,45723
+AST-0028,Asteria,Bellwether,BW-1,Hourly,18.61,,35,AST,Active,Covered,46120
+AST-0029,Asteria,Bellwether,BW-2,Hourly,19.04,,37.5,AST,Active,Covered,45055
+AST-0030,Asteria,Bellwether,BW-3,Annual Salary,,16390,40,AST,Active,Covered,45453
+AST-0031,Asteria,Bellwether,BW-1,Hourly,19.9,,20,AST,Active,Covered,45849
+AST-0032,Asteria,Bellwether,BW-2,Hourly,7.33,,32,AST,Active,Covered,46246
+AST-0033,Asteria,Bellwether,BW-3,Annual Salary,,16908,35,AST,Active,Covered,45182
+AST-0034,Asteria,Bellwether,BW-1,Hourly,8.19,,37.5,AST,Active,Covered,45579
+AST-0035,Asteria,Bellwether,BW-2,Hourly,8.62,,40,AST,Active,Covered,45976
+AST-0036,Asteria,Bellwether,BW-3,Annual Salary,,11128,20,AST,Active,Covered,46372
+AST-0037,Asteria,Bellwether,BW-1,Hourly,9.48,,32,AST,Active,Covered,44943
+AST-0038,Asteria,Bellwether,BW-2,Hourly,9.91,,35,AST,Active,Covered,45340
+AST-0039,Asteria,Bellwether,BW-3,Annual Salary,,23615,37.5,AST,Active,Covered,45735
+AST-0040,Asteria,Bellwether,BW-1,Hourly,10.77,,40,AST,Active,Covered,46132
+AST-0041,Asteria,Bellwether,BW-2,Hourly,11.2,,20,AST,Active,Covered,45047
+AST-0042,Asteria,Bellwether,BW-3,Annual Salary,,22497,32,AST,Active,Covered,45445
+AST-0043,Asteria,Bellwether,BW-1,Hourly,12.06,,35,AST,Active,Covered,45841
+AST-0044,Asteria,Bellwether,BW-2,Hourly,12.49,,37.5,AST,Active,Covered,46238
+AST-0045,Asteria,Bellwether,BW-3,Annual Salary,,31054,40,AST,Active,Covered,45174
+AST-0046,Asteria,Bellwether,BW-1,Hourly,13.35,,20,AST,Active,Covered,45571
+AST-0047,Asteria,Bellwether,BW-2,Hourly,13.78,,32,AST,Active,Covered,45968
+AST-0048,Asteria,Bellwether,BW-3,Annual Salary,,29739,35,AST,Active,Covered,46364
