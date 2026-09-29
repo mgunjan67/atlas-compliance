@@ -17,12 +17,16 @@ from .snapshot_view import snapshot_page
 from .batches import batches, capture_batch, approve_batch, saved_sets, inspection_details, save_resolved_results
 from .batch_impact import batch_impact, batch_impact_csv
 from .dummy import list_runs, run_dummy
+from .ai_sandbox import AISandbox
+from .ai_review import AIReview
 
 STATIC=Path(__file__).with_name('static')
 
 def serve(db_path,employees_path,port):
     token=secrets.token_urlsafe(32)
     scheduler=LiveScheduler(db_path,employees_path)
+    ai_sandbox=AISandbox()
+    ai_review=AIReview(db_path)
     class Handler(BaseHTTPRequestHandler):
         def respond(self,body,status=200,content_type='application/json; charset=utf-8',filename=None):
             raw=body if isinstance(body,bytes) else (body if isinstance(body,str) else json.dumps(body,ensure_ascii=False)).encode()
@@ -40,6 +44,10 @@ def serve(db_path,employees_path,port):
             path=urlparse(self.path);params={k:v[0] for k,v in parse_qs(path.query).items()}
             if path.path=='/api/monitor/status':
                 return self.respond(scheduler.status())
+            if path.path=='/api/ai-test':
+                return self.respond(ai_sandbox.status())
+            if path.path=='/api/ai-review':
+                return self.respond(ai_review.status(params.get('id','')))
             if path.path in ('/','/app.js','/style.css'):
                 file={'/':'index.html','/app.js':'app.js','/style.css':'style.css'}[path.path]
                 typ={'/':'text/html; charset=utf-8','/app.js':'text/javascript; charset=utf-8','/style.css':'text/css; charset=utf-8'}[path.path]
@@ -148,6 +156,8 @@ def serve(db_path,employees_path,port):
             except (ValueError,json.JSONDecodeError):return self.respond({'error':'Invalid request'},400)
             db=None
             try:
+                if self.path=='/api/ai-test':
+                    return self.respond(ai_sandbox.start(params.get('case_id')))
                 db,simulated=self.context(params)
                 day=params.get('date',datetime.now(timezone.utc).date().isoformat())
                 if self.path=='/api/dummy-test':
@@ -182,9 +192,11 @@ def serve(db_path,employees_path,port):
             finally:
                 if db:db.close()
     server=HTTPServer(('127.0.0.1',port),Handler)
+    ai_review.start()
     print(f'Atlas reviewer console: http://127.0.0.1:{port} | live workspace opens by default',flush=True)
     try:server.serve_forever()
     except KeyboardInterrupt:pass
     finally:
+        ai_review.close()
         scheduler.close()
         server.server_close()

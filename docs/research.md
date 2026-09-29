@@ -53,11 +53,13 @@ Each employee/date has one current flag per live or simulated workspace. Identic
 
 Every check records success, change or error for both sources. Failed fetches, unsupported page structure, unmapped changes and cross-source inconsistencies prevent unsupported current decisions. Daily-card expiry is the freshness boundary: an old daily amount cannot be carried into a new day's legal calculation. The last-check time is visible; automatic polling is optional and stops when the server stops. Failed re-evaluation jobs remain stored and retryable. A successful current archive does not hide those failures: the UI reports partial completion and offers a retry. No old source or evaluation is erased to make the status look successful.
 
-## Why the current pipeline does not use AI
+## Where AI helps, and where it does not
 
-Both pages expose labelled rate cards and publication details in their HTML. For this small set of sources, explicit parsing rules are easy to test: the same content produces the same extracted fields and classification. Detected unfamiliar wording is flagged for review; unsupported layouts fail extraction with the page preserved for investigation. This choice trades broader language coverage for a smaller, verifiable system. No runtime model integration is included.
+Both pages expose labelled rate cards and publication details in their HTML. Explicit parsing remains the source of proposed rule fields. The same content produces the same extracted values and classification; unfamiliar wording or unsupported layouts still require investigation.
 
-AI could help find relevant notices or suggest classifications and extracted fields if the project expanded to less structured sources. Those suggestions would need supporting source passages, validation and human approval before becoming rule data. A model would also need testing against labelled examples, including misleading and ambiguous notices, before its output could be relied on. The current project makes no claim of tested AI extraction.
+AI supplies an independent category suggestion from saved publication text. It helps reviewers interpret unfamiliar wording, but it does not repair the parser, extract approved amounts or clear warnings. A separate background worker saves suggestions and their evidence references. The inspection view shows disagreement without changing the existing human approval process.
+
+The initial hosted extraction screen classified 17 of 17 familiar/development examples correctly, but only 12 passed both field and exact-quotation checks. A later 12-case classification experiment matched 10 categories and supplied useful suggestions on five unfamiliar examples. It mishandled conflicting dates and a withdrawn order; the parser safely requested review for both. These small selected tests justify an advisory role, not autonomous decisions. They are separate runs with different prompts; see [AI review](ai-review.md).
 
 Rule selection, jurisdiction precedence, effective-date checks, arithmetic and the final compliance state must remain deterministic and testable. A model should neither approve a rule nor decide whether an employee is compliant.
 

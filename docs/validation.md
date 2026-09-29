@@ -1,10 +1,14 @@
 # Validation record
 
-Verified locally on 28 September 2026. These are observed results, not guarantees of legal correctness or general AI accuracy.
+Updated locally on 29 September 2026. These are observed results, not guarantees of legal correctness or general AI accuracy.
 
 ## Automated verification
 
-`python -m unittest discover -s tests -v`: **103 tests passed**. The suite covers:
+The AI additions cover persistent reuse, candidate-version changes, simulation exclusion, pre-inference quarantine, retry limits, missing credentials, invalid categories/references, provider errors and database-lock isolation. These tests use fake providers; the HTTP test explicitly disables model calls.
+
+The final classifier prompt was also run against 12 fictional notices through Groq: **11 matched**, with conflicting dates still misclassified as a final rate. See the [recorded outputs](ai-evaluation.json). The automatic worker completed all 17 existing live publication suggestions in one attempt each; completion does not establish that every classification is correct. Status requests remained responsive (14–34 ms across three checks). A browser inspection of the pending Asteria future notice showed its saved AI suggestion, supporting-evidence disclosure and unchanged human approval form. No live approvals were performed.
+
+`python -m unittest discover -s tests -q`: **118 tests passed**. The suite covers:
 
 - Precedence in both directions, equality, subcent comparisons, exact weekly arithmetic, missing/invalid inputs and unsupported scope.
 - Daily expiry without fallback, future-effective dates, pending review, conflicting versions and explicit supersession.

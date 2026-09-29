@@ -12,6 +12,9 @@ flowchart TB
   X --> C[("Rule candidates<br/>Review states + evidence")]
   UI["Local web UI / CLI<br/>atlas.web; atlas.__main__"] --> H["Impact preview + human review"]
   C --> H
+  C -->|read-only publication evidence| AI["Background AI classifier<br/>Groq GPT-OSS 120B"]
+  AI --> AIDB[("Separate AI suggestion database")]
+  AIDB -->|advisory category and evidence only| H
   H -->|"Approved rule and job committed together"| V[("Effective-dated reviews<br/>and re-evaluation jobs in SQLite")]
   V --> J["atlas.workflow<br/>Affected-worker selection and retryable jobs"]
   CSV["48 sample employees<br/>data/employees.csv"] --> J
@@ -39,6 +42,8 @@ New candidates enter `REVIEW_REQUIRED` with a discovery timestamp. Numerical rul
 Approval and its re-evaluation job are written atomically. Future rules wait until their effective date. Corrections preserve earlier versions and identify the rule being superseded.
 
 ## Employee evaluation
+
+The AI worker reads committed candidates through a read-only SQLite connection, polls for new versions and writes only to a separate suggestion database. Requests run outside HTTP handlers, source-check locks and database transactions. Suggestions are keyed by candidate identity and model/prompt/schema version. Repeated checks reuse them; earlier versions remain stored. Errors cannot modify source approvals, engine inputs, employee flags or receipts. See [AI review](ai-review.md) for retry and input limits.
 
 The engine reads employee wages, work location and hours from the CSV. It selects the latest applicable approved version for each jurisdiction and applies the higher federal/state floor to Bellwether employees. Decimal arithmetic compares wages before rounding; equality passes.
 

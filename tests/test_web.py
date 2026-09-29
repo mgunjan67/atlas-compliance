@@ -1,5 +1,6 @@
 """HTTP boundary regression: historical exports must match the selected knowledge."""
 import json
+import os
 import socket
 import subprocess
 import sys
@@ -41,7 +42,8 @@ class WebTests(unittest.TestCase):
                 probe.bind(('127.0.0.1',0));port=probe.getsockname()[1]
             process=subprocess.Popen([sys.executable,'-m','atlas','--db',str(folder/'live.db'),
                                       'serve','--port',str(port)],
-                                     cwd=ROOT,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+                                     cwd=ROOT,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,
+                                     env={**os.environ,'ATLAS_AI_DISABLED':'1'})
             base=f'http://127.0.0.1:{port}'
             try:
                 deadline=time.monotonic()+8
@@ -75,6 +77,8 @@ class WebTests(unittest.TestCase):
                 self.assertTrue(daily['seen_in_latest_check'])
                 with urlopen(base+'/api/monitor/status') as response:
                     self.assertFalse(json.load(response)['checking'])
+                with urlopen(base+'/api/ai-review?'+urlencode({'id':daily['id']})) as response:
+                    self.assertEqual(json.load(response)['status'],'unavailable')
                 headers={'Content-Type':'application/json','X-Atlas-CSRF':live['csrf']}
                 with urlopen(Request(base+'/api/monitor/stop',data=b'{"mode":"live"}',headers=headers,method='POST')) as response:
                     self.assertFalse(json.load(response)['running'])

@@ -6,7 +6,7 @@ This document describes development assistance and distinguishes observed source
 
 OpenAI Codex assisted with project planning, source and dataset research, identifying ambiguities, designing the workflow, implementing Python/SQLite and the local browser UI, writing and running tests, debugging, and preparing documentation and test artifacts.
 
-Atlas uses deterministic extraction and classification for these two structured sources. Ambiguous or unsupported publications require human review. No runtime model integration is included.
+Atlas uses deterministic extraction and classification for its rule pipeline. Groq GPT-OSS 120B now supplies separate, automatic classification suggestions in publication inspection. Suggestions do not alter the parser's output or activate rules. Human review and deterministic calculations remain authoritative. The AI sandbox uses generated fictional notices; its outputs are suggestions, not approvals.
 
 The assistant has not represented itself as a human reviewer or approved live source-backed rules. Live review remains an operator responsibility.
 

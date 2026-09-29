@@ -86,7 +86,17 @@ The operating sequence is:
 5. Select the applicable approved federal/state rules for each employee's work location and evaluation date. Return `COMPLIANT`, `NON_COMPLIANT`, `INSUFFICIENT_DATA` or `REVIEW_REQUIRED`.
 6. Save results, review history and source evidence. Previous approved results remain visible with their original date while new changes await review.
 
-Extraction, classification and final calculations are deterministic. No runtime AI service is required. See the [architecture document](docs/architecture.md) for diagrams and implementation details.
+The parser and final calculations stay deterministic. A background AI worker adds separate classification suggestions for human review; it cannot change rule data or employee decisions. See the [architecture document](docs/architecture.md) for the storage and execution boundaries.
+
+## AI review suggestions
+
+Set `GROQ_API_KEY` in the server environment before starting Atlas. On Windows, Atlas also reads the saved user environment variable. Never commit the key. No additional Python packages are needed.
+
+With a key configured, Atlas automatically classifies saved publications using Groq's `openai/gpt-oss-120b`. Open **Inspect** in Rule review to see the parser classification, AI suggestion, supporting text and any disagreement. Existing publications are processed on first startup; unchanged versions reuse saved suggestions.
+
+**AI sandbox** lets you select a fictional notice and request a fresh suggestion. It cannot approve a rule. The ordinary review and calculation workflow remains usable without a key or during an AI outage. Set `ATLAS_AI_DISABLED=1` to disable model requests.
+
+Suggestions are stored beside the live database in a separate `*-ai.sqlite3` file. Keep that file when moving an existing workspace. Only publication text goes to Groq; employee records and approval details are not sent. See [AI review](docs/ai-review.md) for tests, retries and limitations.
 
 ## Assumptions
 
@@ -104,7 +114,7 @@ Extraction, classification and final calculations are deterministic. No runtime 
 - Historical reconstruction covers employee inputs and source versions already captured. It cannot reconstruct unobserved changes or missed daily rates.
 - Receipt verification depends on the matching engine/parser versions. Local hashes detect inconsistency but are not independent signatures or external notarization.
 
-The [research memo](docs/research.md) explains how sources are trusted, why the current pipeline uses explicit parsing instead of AI, and what would need to change before processing real payroll data.
+The [research memo](docs/research.md) explains source trust, the division between parsing and AI suggestions, and what would need to change before processing real payroll data.
 
 ## Run the tests
 
@@ -131,6 +141,7 @@ The story uses saved source pages and the included employees in an isolated simu
 |---|---|
 | [Project brief](docs/reviewer-brief.md) | Summary, key decisions and tradeoffs |
 | [Architecture](docs/architecture.md) | Components, data flow and storage boundaries |
+| [AI review](docs/ai-review.md) | Automatic suggestions, dummy tests, setup and limitations |
 | [Research memo](docs/research.md) | Interpretation of both sources, precedence, effective dates and edge cases |
 | [Employee data analysis](docs/employee-data-analysis.md) | Dataset findings and salary/data exceptions |
 | [Operator guide](docs/operator-review.md) | Evidence inspection, review decisions and result history |

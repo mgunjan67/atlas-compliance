@@ -464,3 +464,16 @@ td small, .metric-label, .metric p, .status-count,
   .source-bar-actions .small, .source-details > summary { font-size: 11px; padding: 7px; }
   .source-popover { width: 100%; padding: 14px; max-height: calc(100vh - 140px); }
 }
+.ai-notice { white-space: pre-wrap; padding: 20px; border: 1px solid #e4dff0; border-radius: 12px; background: #faf8ff; line-height: 1.7; min-height: 150px; }
+.inline-select { display: inline-block; width: min(100%, 38rem); min-width: 0; vertical-align: top; }
+.inline-select > select[hidden] { display: none; }
+.inline-select details { width: 100%; min-width: 0; }
+.inline-select summary { padding: 11px 14px; border: 1px solid #dedce5; border-radius: 8px; background: white; color: var(--ink); overflow-wrap: anywhere; line-height: 1.5; }
+.inline-select summary[aria-disabled="true"] { opacity: .6; cursor: wait; }
+.inline-select-options { display: grid; gap: 4px; padding: 8px; margin-top: 8px; border: 1px solid #dedce5; border-radius: 10px; background: white; max-height: 18rem; overflow-y: auto; }
+.inline-select-options button { text-align: left; white-space: normal; overflow-wrap: anywhere; padding: 10px 12px; border: 0; border-radius: 6px; background: transparent; color: var(--ink); }
+.inline-select-options button:hover, .inline-select-options button:focus-visible, .inline-select-options button[aria-pressed="true"] { background: #f0eaff; color: #572ce1; }
+.panel-body > label:has(.inline-select) { display: grid; gap: 10px; }
+.toolbar:has(#rule-history) { display: grid; gap: 10px; }
+.toolbar > .inline-select { flex: 0 1 24rem; }
+.toolbar:has(.inline-select) { align-items: flex-start; }

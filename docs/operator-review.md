@@ -1,5 +1,7 @@
 # Atlas operator guide
 
+Publication inspections now include an automatic AI category suggestion beside the parser's classification. Check the supporting evidence and any disagreement before making the existing review decision. A queued or unavailable AI result does not prevent manual source review. Suggestions cannot change a rule's status or approve a federal/state update. Use **AI sandbox** to try the supplied fictional notices without affecting live work.
+
 Use the operator interface to inspect captured source evidence and decide whether a proposed rule can be applied. The examples below refer to saved source snapshots; use a fresh check for current rates.
 
 ## Numerical rule candidates

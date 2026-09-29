@@ -24,7 +24,7 @@ Atlas implements that complete loop for the two fictional authorities and the in
 
 The baseline has 21 below-floor, 11 compliant and 16 review cases. The synthetic correction produces 23, 9 and 16 respectively. The weekly total rises from 3,148.80 to 3,886.08 AST, supported by 32 hourly records. These are scheduled-hours estimates, not final liabilities. The packaged live example is a pre-review state; local reviewer actions are not shipped.
 
-There are 103 automated tests plus the executable scenario lab. The oracle independently checks arithmetic using exact fractions. These bounded checks support specific claims; they do not establish model accuracy or production legal correctness. See [validation](validation.md).
+There are 118 automated tests plus the executable scenario lab. The oracle independently checks arithmetic using exact fractions. Automatic AI suggestions are kept separate from rule approval and calculation. The current classifier matched 11 of 12 fictional cases in one recorded run; it still misread conflicting dates. These bounded checks do not establish general model accuracy or production legal correctness. See [validation](validation.md) and [AI review](ai-review.md).
 
 ## Why this scope
 
