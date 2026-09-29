@@ -18,7 +18,7 @@ def sha(data):
 
 def main():
     build_stamp=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
-    files={ROOT/name for name in ('README.md','PLAN.md','pyproject.toml','.gitignore','.env.example','data/employees.csv')}
+    files={ROOT/name for name in ('README.md','PLAN.md','pyproject.toml','.gitignore','.gitattributes','data/employees.csv')}
     for directory in ('atlas','tests','scripts','docs','data/research','output/reviewer-story'):
         files.update(p for p in (ROOT/directory).rglob('*')
                      if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc')
@@ -108,6 +108,8 @@ def main():
                   'note':'Offline smoke check in a fresh temporary directory; no model API call or source approval.'}
     (ROOT/'output'/f'submission-manifest-{build_stamp}.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
     (ROOT/'output'/f'package-verification-{build_stamp}.json').write_text(json.dumps(verification,indent=2),encoding='utf-8')
+    (ROOT/'output/submission-manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
+    (ROOT/'output/package-verification.json').write_text(json.dumps(verification,indent=2),encoding='utf-8')
     shutil.copyfile(archive,ROOT/'output/atlas-submission.zip')
     if sha((ROOT/'output/atlas-submission.zip').read_bytes())!=verification['sha256']:
         raise ValueError('Stable submission ZIP does not match verified archive')

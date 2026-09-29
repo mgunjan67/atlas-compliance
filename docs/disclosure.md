@@ -6,7 +6,7 @@ Candidate: verify this disclosure, describe any additional work in your own word
 
 OpenAI Codex assisted with reading the take-home brief, source and dataset research, identifying ambiguities, designing the workflow, implementing Python/SQLite and the local browser UI, writing and running tests, debugging, and preparing documentation and demonstration materials.
 
-The compliance engine and primary source extraction are deterministic. An optional OpenAI Responses API integration produces a structured second opinion on extracted public source items. It has not been run against a live model. Tests validate its request and output boundary using fixtures; no live accuracy, cost or latency result is claimed. No employee inputs are included in that optional API request.
+The submitted workflow uses deterministic extraction and classification for these two structured sources. Ambiguous or unsupported publications require human review. AI is optional in the assignment; no runtime model integration is included.
 
 The assistant has not represented itself as a human reviewer or approved live source-backed rules. The candidate must understand and be able to defend the implementation and assumptions.
 
@@ -23,7 +23,7 @@ The assistant has not represented itself as a human reviewer or approved live so
 
 ## Time
 
-The candidate reports approximately **18 hours** spent so far, including reading, implementation review and testing with Codex. This is candidate-reported time, not a machine-measured duration. Add recording and any further preparation time before final submission if the total changes.
+The candidate confirmed approximately **18 hours** on 28 September 2026, including reading, implementation review and testing with Codex. This is candidate-reported personal time, not a machine-measured duration. The recording is still pending; update the total if recording or further preparation changes it.
 
 ## Submission actions still owned by the candidate
 

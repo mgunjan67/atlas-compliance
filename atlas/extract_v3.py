@@ -7,7 +7,7 @@ from html.parser import HTMLParser
 SOURCES = {'federal': 'https://asterian-federal-wage-site.vercel.app/',
            'bellwether': 'https://bellwether-state-wage-site.vercel.app/'}
 JURISDICTIONS = {'federal': 'Asteria', 'bellwether': 'Bellwether'}
-PARSER_VERSION = 'html-v4'
+PARSER_VERSION = 'html-v3'
 
 INSTRUCTION_PATTERNS = (
     r'ignore\s+(all\s+)?(previous|prior|system)\s+instructions',
@@ -94,22 +94,6 @@ def candidate_identity(candidate, simulated):
     # evidence retains existing reviews; changed meaning creates a new candidate.
     return digest([normalized,simulated,'html-v2'])
 
-
-def supported_rate_statement(statement, source):
-    """Only the known general-rate wording establishes unrestricted scope.
-
-    Extra conditions or unfamiliar prose require review; a short list of
-    restricted-worker keywords cannot safely establish general coverage.
-    """
-    prefixes = {
-        'federal': r'The Asterian federal minimum wage for covered, nonexempt employees will increase to',
-        'bellwether': r'Bellwether[’\']s minimum wage will increase to',
-    }
-    general = r'(?:The )?(?:general minimum wage|Final general minimum wage|Corrected general minimum wage) (?:is|will be|is corrected to|is replaced by)'
-    return bool(re.fullmatch(
-        rf'(?:{prefixes[source]}|{general}) \d+(?:\.\d{{1,2}})? AST per hour effective [A-Z][a-z]+ \d{{1,2}}, \d{{4}}\.?',
-        statement))
-
 def extract(html, source):
     root = Document(html).root
     if source not in SOURCES:
@@ -159,18 +143,14 @@ def extract(html, source):
                     source_version=metadata(article).get('Source version'), amount=None, currency='AST', unit='hour',
                     effective_from=None, effective_to=None, publication_date=pub, evidence=content,
                     source_url=SOURCES[source]+'#'+(notice_id or 'notices'))
-        # Capture the whole token before validating it. Never match the tail of
-        # an unsupported number (e.g. 13.255 -> 255, or 1,234.00 -> 234.00).
-        rate_tokens = re.findall(r'(\S+) AST per hour effective ([A-Z][a-z]+ \d{1,2}, \d{4})', statement)
-        rate_matches = rate_tokens if all(re.fullmatch(r'\d+(?:\.\d{1,2})?', amount) for amount, _ in rate_tokens) else []
+        rate_matches = re.findall(r'(\d+(?:\.\d{1,2})?) AST per hour effective ([A-Z][a-z]+ \d{1,2}, \d{4})', statement)
         # Labels are hints, not authority. Contradictory prose must not be
         # dismissed as news/proposal or silently promoted into a wage rule.
         wage_signal=bool(re.search(r'\d+(?:\.\d+)?\s*(?:AST|USD)\s*(?:per\s*hour|/\s*h)',statement,re.I))
         contradiction = (wage_signal and 'news' in classes) or bool(re.search(
             r'\bnot\s+(?:a\s+)?(?:proposal|draft)|\b(?:withdrawn|rescinded|not final)\b', statement, re.I))
         restricted = bool(re.search(r'\b(?:retail|headcount|employer.size|employers? with|only applies|applies only|except|exclud\w*)\b', statement, re.I))
-        unsupported_scope = bool(rate_matches) and ('final' in classes or 'correction' in classes) and not supported_rate_statement(statement, source)
-        if contradiction or (rate_matches and restricted) or unsupported_scope:
+        if contradiction or (rate_matches and restricted):
             base.update(kind='UNKNOWN',classification='REVIEW_REQUIRED',
                         reason='Conflicting publication signals or unsupported coverage conditions; inspect the source before deciding scope.')
         elif 'proposal' in classes or re.search(r'\b(proposed|proposal|not effective law|draft)\b',statement,re.I):
@@ -192,7 +172,7 @@ def extract(html, source):
         else:
             base.update(kind='UNKNOWN',classification='REVIEW_REQUIRED',reason='Unsupported or ambiguous notice format.')
         base['extraction_method']='deterministic-html'
-        base['coverage']='unknown' if base['kind']=='UNKNOWN' else 'covered_nonexempt'
+        base['coverage']='covered_nonexempt'
         if base['classification']=='RATE_REVIEW':
             base['field_evidence']={'amount':field_span(content,base['amount']),
                                     'effective_from':field_span(content,rate_matches[0][1]),

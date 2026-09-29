@@ -7,7 +7,7 @@ from html.parser import HTMLParser
 SOURCES = {'federal': 'https://asterian-federal-wage-site.vercel.app/',
            'bellwether': 'https://bellwether-state-wage-site.vercel.app/'}
 JURISDICTIONS = {'federal': 'Asteria', 'bellwether': 'Bellwether'}
-PARSER_VERSION = 'html-v4'
+PARSER_VERSION = 'html-v2'
 
 INSTRUCTION_PATTERNS = (
     r'ignore\s+(all\s+)?(previous|prior|system)\s+instructions',
@@ -90,25 +90,7 @@ def candidate_identity(candidate, simulated):
     if candidate.get('kind')=='DAILY_RATE' and candidate.get('classification')=='RATE_REVIEW':
         normalized.pop('field_evidence',None)
         normalized['evidence']=re.sub(r'State rate \d+(?:\.\d+)? AST/hr\s*','',normalized['evidence'])
-    # The identity contract is independent of the adapter release. Unchanged
-    # evidence retains existing reviews; changed meaning creates a new candidate.
-    return digest([normalized,simulated,'html-v2'])
-
-
-def supported_rate_statement(statement, source):
-    """Only the known general-rate wording establishes unrestricted scope.
-
-    Extra conditions or unfamiliar prose require review; a short list of
-    restricted-worker keywords cannot safely establish general coverage.
-    """
-    prefixes = {
-        'federal': r'The Asterian federal minimum wage for covered, nonexempt employees will increase to',
-        'bellwether': r'Bellwether[’\']s minimum wage will increase to',
-    }
-    general = r'(?:The )?(?:general minimum wage|Final general minimum wage|Corrected general minimum wage) (?:is|will be|is corrected to|is replaced by)'
-    return bool(re.fullmatch(
-        rf'(?:{prefixes[source]}|{general}) \d+(?:\.\d{{1,2}})? AST per hour effective [A-Z][a-z]+ \d{{1,2}}, \d{{4}}\.?',
-        statement))
+    return digest([normalized,simulated,PARSER_VERSION])
 
 def extract(html, source):
     root = Document(html).root
@@ -128,9 +110,6 @@ def extract(html, source):
         raise ValueError('Ambiguous rate card amount')
     if 'AST per hour' not in card.text() or 'Covered, nonexempt employees' not in card.text() or not meta.get('Rule ID'):
         raise ValueError('Schema drift: currency, unit, coverage or rule ID missing')
-    coverage = meta.get('Coverage', meta.get('Applies to', ''))
-    if coverage != 'Covered, nonexempt employees':
-        raise ValueError('Unsupported rate-card coverage; review the changed scope before use')
     candidates.append(dict(source=source, jurisdiction=jurisdiction, source_rule_id=meta['Rule ID'],
         source_version=meta.get('Source version'), kind='DAILY_RATE', amount=amounts[0].text(), currency='AST', unit='hour',
         effective_from=effective, effective_to=(datetime.fromisoformat(effective).date()+timedelta(days=1)).isoformat(),
@@ -154,26 +133,13 @@ def extract(html, source):
             try: pub = parse_date(spans[1].text())
             except ValueError: pass
         paragraphs = article.find('p')
-        statement = ' '.join(p.text() for p in paragraphs)
+        statement = paragraphs[0].text() if paragraphs else ''
         base = dict(source=source, jurisdiction=jurisdiction, source_rule_id=notice_id or 'unidentified-notice',
                     source_version=metadata(article).get('Source version'), amount=None, currency='AST', unit='hour',
                     effective_from=None, effective_to=None, publication_date=pub, evidence=content,
                     source_url=SOURCES[source]+'#'+(notice_id or 'notices'))
-        # Capture the whole token before validating it. Never match the tail of
-        # an unsupported number (e.g. 13.255 -> 255, or 1,234.00 -> 234.00).
-        rate_tokens = re.findall(r'(\S+) AST per hour effective ([A-Z][a-z]+ \d{1,2}, \d{4})', statement)
-        rate_matches = rate_tokens if all(re.fullmatch(r'\d+(?:\.\d{1,2})?', amount) for amount, _ in rate_tokens) else []
-        # Labels are hints, not authority. Contradictory prose must not be
-        # dismissed as news/proposal or silently promoted into a wage rule.
-        wage_signal=bool(re.search(r'\d+(?:\.\d+)?\s*(?:AST|USD)\s*(?:per\s*hour|/\s*h)',statement,re.I))
-        contradiction = (wage_signal and 'news' in classes) or bool(re.search(
-            r'\bnot\s+(?:a\s+)?(?:proposal|draft)|\b(?:withdrawn|rescinded|not final)\b', statement, re.I))
-        restricted = bool(re.search(r'\b(?:retail|headcount|employer.size|employers? with|only applies|applies only|except|exclud\w*)\b', statement, re.I))
-        unsupported_scope = bool(rate_matches) and ('final' in classes or 'correction' in classes) and not supported_rate_statement(statement, source)
-        if contradiction or (rate_matches and restricted) or unsupported_scope:
-            base.update(kind='UNKNOWN',classification='REVIEW_REQUIRED',
-                        reason='Conflicting publication signals or unsupported coverage conditions; inspect the source before deciding scope.')
-        elif 'proposal' in classes or re.search(r'\b(proposed|proposal|not effective law|draft)\b',statement,re.I):
+        rate_matches = re.findall(r'(\d+(?:\.\d{1,2})?) AST per hour effective ([A-Z][a-z]+ \d{1,2}, \d{4})', statement)
+        if 'proposal' in classes or re.search(r'\b(proposed|proposal|not effective law|draft)\b',statement,re.I):
             base.update(kind='PROPOSAL',classification='NOT_LAW',reason='Proposal is not effective law.')
         elif 'news' in classes:
             base.update(kind='NEWS',classification='IRRELEVANT',reason='Operational news; not a wage rule.')
@@ -192,38 +158,12 @@ def extract(html, source):
         else:
             base.update(kind='UNKNOWN',classification='REVIEW_REQUIRED',reason='Unsupported or ambiguous notice format.')
         base['extraction_method']='deterministic-html'
-        base['coverage']='unknown' if base['kind']=='UNKNOWN' else 'covered_nonexempt'
+        base['coverage']='covered_nonexempt'
         if base['classification']=='RATE_REVIEW':
             base['field_evidence']={'amount':field_span(content,base['amount']),
                                     'effective_from':field_span(content,rate_matches[0][1]),
                                     'currency':field_span(content,'AST'),'unit':field_span(content,'per hour')}
         candidates.append(base)
-    # Preserve all visible text for change detection, including unfamiliar layouts.
-    observations.append({'kind':'visible_page','text':root.text()})
-    recognized={id(n) for n in cards+articles}
-    def residual(node):
-        if id(node) in recognized or node.tag in ('script','style','noscript') or 'hidden' in node.attrs or node.attrs.get('aria-hidden')=='true':
-            return ''
-        return ' '.join(' '.join(residual(c) if isinstance(c,Node) else c for c in node.children).split())
-    rest=residual(root)
-    # Repeated card values/dates elsewhere on the page are expected. Normalize
-    # only these source-supported values, not arbitrary new rates or prose.
-    for value in re.findall(r'\d+\.\d{2}',card.text()):
-        rest=re.sub(r'(?<![\d.])'+re.escape(value)+r'(?![\d.])','[card amount]',rest)
-    rest=re.sub(re.escape(re.search(r'[A-Z][a-z]+ \d{1,2}, \d{4}',meta['Effective'])[0]),'[card date]',rest)
-    observations.append({'kind':'unmapped_text','text':rest})
-    for node in root.find():
-        if node.tag not in ('article','section') or id(node) in recognized: continue
-        if any(id(child) in recognized for child in node.find()): continue
-        content=node.text()
-        if not re.search(r'\d+(?:\.\d+)?\s*AST\s*(?:per\s*hour|/\s*h)',content,re.I): continue
-        if any(c['evidence']==content for c in candidates): continue
-        from .store import digest
-        candidates.append(dict(source=source,jurisdiction=jurisdiction,source_rule_id='unmapped-'+digest(content)[:12],
-            source_version=None,kind='UNKNOWN',classification='REVIEW_REQUIRED',amount=None,currency='AST',unit='hour',
-            effective_from=None,effective_to=None,publication_date=None,evidence=content,source_url=SOURCES[source],
-            reason='Wage-like content outside the supported publication layout; scope and dates require review.',
-            extraction_method='visible-content-guard',coverage='unknown'))
     for candidate in candidates:
         if candidate['amount'] is not None:
             candidate['amount']=format(Decimal(candidate['amount']),'.2f')

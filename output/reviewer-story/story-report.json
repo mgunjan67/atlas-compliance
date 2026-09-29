@@ -225,30 +225,30 @@
         "2026-09-24"
       ],
       "evaluation_ids": [
-        "2bf11718615c27b295aa050271b16fd18edb1e500179977892b7fb9f17775637",
-        "2b9dc580c1197b064dc9e00e2ed0a33393afb7bc4da4be24357a3a05f0f6a27d",
-        "143ccc342a4791b00c7bad484a5f4cb90d4e764f4d7b799a1ca7f409a06b4253",
-        "08cf976a77391b23737ad9654cceff7dc4f2593393f348182e84ddfb1dffcde1",
-        "adc7fe2ae553d6199c6bc77d4c28595a9fceb21f67e45894713e987864ac6358",
-        "a2eb22b33c04430a39a3d4230496e2d82fabfcb6a55bd9c2aeadb2250603a4c8",
-        "61bd145fce629bf31fc6d4c0a405e37ff186073a8a3171b3c7a74c6777bd334c",
-        "53473184d730dc3c77451816f8f6a25f73bbe65caa7291c96da06dcc26fb43ce",
-        "506bbbcf16cd0fa5d6da6943550b322554e8e9899a9db844f37d314a13c7f7d3",
-        "55adbf28337f90bed9e0c8338c6597d98403a6d1fe89831c77e84c1fb2a116e9",
-        "ee27f9087793df5ec635f999b59b28b1c178d48c563bf0c05c161ecc5d2ec9c6",
-        "5cad6e3cd753b4709633bd602f4a1728a961855bdf5f787c10c145b689a969e0",
-        "1ff5200fccffcc2b82d9114f7a6bd2f20b06a43329a0d69047d2c40ad37b32ce",
-        "c28a35095b31bf38ceadf9c7c3e439c8ca58c10b3971d86458951ee956e335bb",
-        "32abf50a80c7d767c3f765504f7e4819342c6aad82df897bfd6164302c518041",
-        "809ef02d649fce542a1ad76e6d71f4377885e576acaa73b896809b974da6be90",
-        "f08edb56e3721873ea7323d173741157f1ff6f53fe11c29e7d2d752e7d20fd5e",
-        "eba01117c2b89c7c12aa81873eb0f75fc93899b517c84439adc91e02ee7ccc9a",
-        "fe09585e8d5c39a47b814dbad98a32b955a5a0232b15cd453fd52bef05b25541",
-        "d426f4a7220ab3be205a800854ea3fa19e1e814bc0bf1509884569b3b1c527a1",
-        "dbbf94227d2ef6f622b8bb7c5bd34d771f904c9aa03404b3cce1a74879f06c71",
-        "96a1d0c919aed340f3dcfa01b92a829db49d9e4d5312c1508f7d3b21114cfe05",
-        "4526c64904ea9c8148f7479961f5eab24747321580dffeff48ef5c9171575531",
-        "f3dca2955824ac1110802ea28e311fec540aaab34d546eb2cfa2f267dfab3888"
+        "8eb8d9401530943f69b75f1f6593468f02e0ee931deb3cee21c4e058a893de92",
+        "9661a18cdb57ecd0c6055293f8982b0955b2378e1b7fb9d9e48ff4f9a9da8edf",
+        "fd37ccfc3a77710fdac539c56c3564177132e007fbc09a3e0b08fa96877c737c",
+        "ef9580856c20d6f2e9567a53b3749d7df5c68ce107673ccb021c20da0751cadf",
+        "e7a091f3afbab9e3e72bc1d0423fb01959818905cffc67829712977dbfcbc91d",
+        "c7ce7c2925699a721d29094faeaac39a3ddc3e454e7575d30abd1ef9eb72b114",
+        "ace76b4d2f1627b8f0d42dff8d3e83d19b51df18db797190d98e24b2510dcf84",
+        "30108ba6f6cf4026302f6fac1aeca58b8e4066d3094ec4101f67dd80a6c0ea1c",
+        "4fd32977426668d420e6548a98b32bfec1c7a00ce12188831c686546c6512204",
+        "e6fb1cd3ea50a91973dc280c1785720637c20a28e8e3771ad5e93b0979d6fe4d",
+        "e151d15ee0798685a49392750b6bd3aa49740a85387a15be4aa72caa203bbfe6",
+        "9505319f6d5bd50e9f858229ba435bccfc77958984983f711335cb978ccf69d1",
+        "67c08dd3f6d1679f253f085b1de223f4bf537e873c6cbc7eb7c9cd413a5aeca8",
+        "e485896f533d54598c1fbcab512475bfdded9eca12a03c806eb16ca1bf5fe156",
+        "576b6b774bcd87724ad335a8c7cb0f920fab04e803eddf7ccf96a3be501be54c",
+        "866e5e5d6c8c5a374ebdf9e76ba82f7ee93c87ac40c52e309966b53e53a0d681",
+        "b1c87f907ea46dc60d11d9e5be61e382332bb699d8501955edf76b684201c770",
+        "8e4f6b336a23b66d2972860c049d2a735e344497a6bbd38e0ba86ca2e11663f2",
+        "37cf388fdc5da284eee7d37c522e53f3080cc3f93581bb0bb2b0e3b2ae320b08",
+        "975de7e927ed82af0b3036dbef7c3b88c824609c233a2e0b615b9f442e804747",
+        "f7c4290d9bfbaa08f7f0ae34e571bd87b9f50b57b25d348c1ed1c6f950f0f872",
+        "fb4641bc3cc1489e531633a5d9635293ae37e6da174296bdad19f8ecaaabbad1",
+        "269cc44cbb5d083cbeea15d3479dae5c04e683882b3daa03c628dceb7a32ae3b",
+        "65455c60690239faad629fd11616c8171babc1272666bb01afa9d5f968616b72"
       ],
       "limitation": "Historical backfill covers stored evaluations only; unobserved employee history is not invented."
     }
@@ -256,7 +256,7 @@
   "original_receipt_after_correction": {
     "valid": true,
     "errors": [],
-    "receipt_sha256": "7dc5c55fb1039394942e2ced45e35a33b9477aace270c73af8cce77dba850b35",
+    "receipt_sha256": "13dccaeee588fecb315ce576633e641e5016f00a1b2f601d000143e2a01655af",
     "external_digest_checked": false,
     "checks": [
       "bundle checksum",
@@ -269,7 +269,7 @@
   "corrected_receipt": {
     "valid": true,
     "errors": [],
-    "receipt_sha256": "6ed62597004d83fd4d52dd18e94cb3978e0a0c19e639a86e242fa1381dcaa812",
+    "receipt_sha256": "27620a4fc239a6dc11706c93ce9943ccf3d775b2a7d8d108490ffd412f3f6db7",
     "external_digest_checked": false,
     "checks": [
       "bundle checksum",
@@ -283,7 +283,7 @@
   "audit_integrity": {
     "valid": true,
     "events_checked": 261,
-    "head": "a57f755fe5b576d3b962e5b6de31c594968496ec8b28785b0da731e6fb3078be",
+    "head": "105446003f96826dd8fab0b2adbaf0eac01539ed94c9e9af65770be6835c96ff",
     "limitation": "Local hash chain detects changes relative to a trusted checkpoint; it is not a signature or external notarization."
   },
   "case_study": {

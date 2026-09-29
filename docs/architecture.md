@@ -37,7 +37,6 @@ flowchart TB
   W --> DB1[("SQLite live database<br/>fetch logs + raw snapshots + semantic diffs")]
   W --> X["atlas.extract<br/>Visible-page parsing; relevance and field evidence"]
   X --> C[("Candidate records<br/>Pending, approved or rejected")]
-  X -. "Public text only; optional, not run in submission" .-> AI["atlas.ai<br/>Validated model second opinion"]
   UI["Local web UI / CLI<br/>atlas.web; atlas.__main__"] --> H["Impact preview + human review"]
   C --> H
   H -->|"Approved rule and job committed together"| V[("Effective-dated reviews<br/>and re-evaluation jobs in SQLite")]
@@ -52,10 +51,10 @@ flowchart TB
   H --> LED
   O --> LED
   REP["Saved 24 Sep pages + synthetic correction"] --> DEMO[("Separate replay SQLite database")]
-  DEMO --> UI
+  DEMO --> CLI["CLI correction story<br/>Explicitly simulated approvals"]
   DB1 --> UI
 ```
 
-**Live versus replay:** Live captures the actual designated pages and leaves new rates pending until a person approves them. Replay is isolated and contains explicitly simulated approvals and a synthetic correction so an interviewer can inspect the complete change loop safely.
+**Live and test boundaries:** The web console captures the designated pages and leaves new rates pending until a person approves them. Scenario lab saves custom-rate calculation tests separately. The CLI correction story uses an isolated database, explicitly simulated approvals and a synthetic correction to demonstrate the complete change loop. It is not a second browser workspace.
 
-**Implementation boundary:** `watch` is an optional foreground 15-minute process; the browser console can start the same interval while its server is open. Both schedules are stopped by default, and the earlier Codex freshness task was stopped at the candidate's request. Each completed watcher cycle archives all 48 results, including pending decisions. SQLite provides the local version, job and audit stores; there is no production identity system or full payroll integration. The optional model audit was implemented as a bounded second opinion but was not called for the submission. The wage calculation and final state always come from `atlas.engine`, not an LLM.
+**Implementation boundary:** `watch` is an optional foreground 15-minute process; the browser console can start the same interval while its server is open. Both schedules are stopped by default, and the earlier Codex freshness task was stopped at the candidate's request. Each completed watcher cycle archives all 48 results, including pending decisions. SQLite provides the local version, job and audit stores; there is no production identity system or full payroll integration. The wage calculation and final state always come from `atlas.engine`, not an LLM.

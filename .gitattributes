@@ -1,0 +1,4 @@
+# Preserve captured evidence and signed receipts byte-for-byte on every platform.
+data/** -text
+output/** -text
+*.woff2 binary

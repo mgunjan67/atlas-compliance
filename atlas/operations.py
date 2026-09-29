@@ -20,9 +20,15 @@ def poll_once(db, employees_path='data/employees.csv',
     checked_at = checked_at.astimezone(timezone.utc)
     day = checked_at.date().isoformat()
     checks = [fetch_source(db, source) for source in SOURCES]
+    from .batches import capture_batch, batches, finish_batch, save_resolved_results
+    batch_id = capture_batch(db, checks, day)
     employees = load_employees(employees_path)
+    for batch in batches(db):
+        if batch['state']=='APPROVED' and batch['results'] is None:
+            finish_batch(db,batch['id'],employees)
     jobs = process_jobs(db, employees, day)
     results = run_evaluation(db, employees, day)
+    save_resolved_results(db,results,day)
 
     latest_path = Path(latest_path)
     export_results(results, latest_path)
@@ -38,6 +44,7 @@ def poll_once(db, employees_path='data/employees.csv',
         'checked_at': checked_at.isoformat(),
         'evaluation_date': day,
         'source_checks': checks,
+        'review_batch_id': batch_id,
         'jobs': jobs,
         'summary': summarize(results),
         'archive_files_sha256': files,

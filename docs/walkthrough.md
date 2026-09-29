@@ -1,57 +1,35 @@
 # Seven-minute reviewer walkthrough
 
-Use a fresh replay DB: `python -m atlas serve --port 8788 --demo-db data/recording-1.sqlite3`. If the filename was used before, choose another. Open http://127.0.0.1:8788 and switch **Workspace** to **Replay · supplied dataset** before beginning the demonstration. Keep the terminal available for the lab and receipt verification. This script is preparation for a recording or live demo; no recording is included.
+This is a recording guide; no recording is included. Use the live workspace and Scenario lab. Dummy tests demonstrate calculations, not live fetching or human approval.
 
-## 0:00–0:45 — Frame the operator problem
+## 0:00–1:00 — Explain the task and current results
 
-“The number comparison is deterministic. The operational problem is whether the rule is authoritative, effective, approved and relevant to the employee—and whether that answer can be explained after a correction.”
+Open Overview. Explain the two source websites, the 48 supplied employees and the higher applicable federal/state minimum for Bellwether workers. Show the result date, employee counts and location breakdown. Open an employee from Wages to investigate to explain a confirmed hourly gap. The shared top bar controls live checks from every tab; open Rates & details for the rates and full check timestamps.
 
-Show the simulation banner. Explain that the two sources and employee data come from the assessment. Baseline approvals are simulated; the injected 18.50 correction is synthetic. The live workspace remains separate.
+## 1:00–2:30 — Check sources and inspect evidence
 
-## 0:45–1:45 — Show the actual data and an honest baseline
+Click Check sites in the top bar. Wait for the completed result, then expand Rates & details. Open saved source evidence and compare the amount, date and scope with the extracted facts. If a changed daily pair needs review, inspect both rates together and make your own approval decision only after checking the evidence. If nothing changes, say so; do not present a dummy test as a live source change.
 
-Overview: 48 supplied employees, 21 below the approved floor, 11 compliant, 16 requiring review. Known weekly estimate is 3,148.80 AST for 32 records. Explain that scheduled hours do not establish wages owed.
+## 2:30–3:30 — Explain an employee result
 
-Open Employee decisions. Inspect a salary record and AST-0012. Explain the missing conversion policy and Active/future-start contradiction. Show the next action instead of claiming complete automation.
+Open Employee decisions. Inspect an hourly worker: wage, controlling minimum, decision and required shortfall fields. Show the saved evidence and verify the receipt. Explain that annual-salary records need a comparison policy and that future-start conflicts remain review cases.
 
-## 1:45–3:15 — Discover a correction and preview impact
+## 3:30–4:30 — Show preserved approved results
 
-Return to Overview and click Introduce correction. Open the new 18.50 Bellwether candidate. Read its evidence and date. Show that it is pending and that a same-date old version exists.
+Choose an earlier inspection using Results from. Show that both federal and state rates belong to one saved result set. Expand Approval & source details. Return to Latest results. Older separately approved records are labelled honestly rather than presented as a combined approval.
 
-Preview: 24 affected, 24 outside the jurisdiction; Bellwether below-floor count 11 → 13; +737.28 AST weekly estimate across 16 supported hourly records. Other uncertainty remains unresolved.
+## 4:30–5:45 — Test a change safely
 
-Check the saved source, enter a reviewer name, tick the verification box and add a note if needed. Atlas records a source-specific reason in the audit trail. Explain the selected supersession link before approving. This is an explicit test decision, not a live human approval.
+Open Scenario lab. Keep the test date explicit. Enter federal 19 and state 16 to demonstrate federal taking precedence for Bellwether. Give the test a clear name and click Run & save dummy test. Inspect employee floors and the comparison with the approved baseline. Reopen it from Saved dummy tests. Explain that it uses the supplied employee inputs and synthetic rates, leaves live approvals unchanged, and does not reproduce a historical employee snapshot.
 
-## 3:15–4:15 — Follow the impact to a worker
+## 5:45–6:30 — Show test evidence
 
-Overview becomes 23 below-floor, 9 compliant, 16 review; 3,886.08 AST supported weekly estimate. Search AST-0025: 17.32 actual versus 18.50 required; 1.18 hourly difference, 47.20 at 40 scheduled hours. Inspect the controlling source and next action.
+Expand Automated checks: 16 curated scenarios, independent arithmetic checks and deliberate engine bugs caught. The manual-rate form only tests calculations. To demonstrate a repeatable source change, run `python -m atlas story` in the terminal and open `output/reviewer-story/story-report.json`: show the simulated detected correction, approval, before/after counts and AST-0025. Then run `python -m atlas verify output/reviewer-story/original-receipt.json` to show that the old decision still reproduces. Label this sequence simulated; it does not approve live sources.
 
-Click Verify replay now. Explain that the receipt binds the stored input, rule version, preserved HTML and matching engine. Export is available for another reviewer.
+## 6:30–7:00 — Explain limits and tradeoffs
 
-## 4:15–5:15 — Preserve the past and recover work
-
-Open Evidence ledger. Show the completed correction job and future jobs waiting for January. Approval and the work item are one database transaction. A failed job is retried without creating duplicate flags.
-
-Click Before correction. Go to Employee decisions and inspect AST-0025 again: the old result is COMPLIANT using 16.63. The historical query does not reopen current flags. Return to current knowledge.
-
-Explain the limit: historical re-evaluation uses stored employee snapshots, not today's wage projected backward. The test suite includes an employee who moves jurisdiction after the original work date.
-
-## 5:15–6:15 — Challenge the implementation
-
-Open Scenario lab: 16 curated cases, 1,000 independent fraction-based arithmetic checks, five actual engine bugs caught. Mention the missing-state fallback and premature future-rate mutants. These are reproducible synthetic checks; there is no claim of a measured LLM accuracy score.
-
-Optionally run `python -m unittest discover -s tests -v` in the terminal. Keep output focused on the final result.
-
-## 6:15–7:00 — Explain AI scope and tradeoffs
-
-“The optional AI integration provides a structured second opinion on public source items. Its output is validated and cannot approve a rule or calculate a wage. I have not run the live model integration, so I am not claiming measured model quality or cost.”
-
-Explain why local SQLite and a single operator are sufficient for this bounded assessment. Name the next two priorities: authenticated reviewer identity and effective-dated employee history. Close on the preserved old receipt and the concrete correction impact.
+Extraction and classification are deterministic for the two structured assessment sources. Unknown or ambiguous material needs human review. AI is optional in the assignment; no untested runtime model integration is included. Mention the local single-operator scope, salary-policy uncertainty, actual preparation time and development assistance.
 
 ## Before recording
 
-- Run the full tests, lab and `story` once; keep the output files accessible.
-- Read the code paths you will explain; replace this script's wording with your own understanding.
-- Use an unused replay filename and the September 24 date.
-- Include actual preparation time and disclose development assistance.
-- If using live source approvals in the recording, make those decisions yourself after reading the evidence. The simulated demonstration already establishes the workflow without misrepresenting approval.
+Run the tests and story, inspect the artifacts you plan to show, and use your own words. Do not claim a dummy run checks websites or approves published rules. Verify any real source before approving it yourself.

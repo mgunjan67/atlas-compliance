@@ -41,10 +41,18 @@ def verify_receipt(receipt,expected_digest=None):
         if not snapshot:
             errors.append('Missing source for rule '+rule['id']);continue
         try:
-            extracted,_,_=extract(snapshot['raw_html'],snapshot['source'])
-            if not any(candidate_identity(c,rule['simulated'])==rule['id'] for c in extracted):
+            parser=extract
+            if snapshot.get('parser_version')=='html-v2':
+                from .extract_v2 import extract as parser
+            elif snapshot.get('parser_version')=='html-v3':
+                from .extract_v3 import extract as parser
+            extracted,_,_=parser(snapshot['raw_html'],snapshot['source'])
+            source_id=rule.get('source_candidate_id',rule['id'])
+            if 'source_candidate_id' in rule and rule['id']!=digest([source_id,'recurrence',rule.get('recurrence_after_fetch')]):
+                errors.append('Invalid recurring publication identity')
+            if not any(candidate_identity(c,rule['simulated'])==source_id for c in extracted):
                 errors.append('Rule is not bound to its source: '+rule['id'])
-            original=next((c for c in extracted if candidate_identity(c,rule['simulated'])==rule['id']),None)
+            original=next((c for c in extracted if candidate_identity(c,rule['simulated'])==source_id),None)
             if original and any(rule.get(k)!=v for k,v in original.items()): errors.append('Rule fields were changed after extraction')
         except ValueError as exc: errors.append('Source re-extraction failed: '+str(exc))
     try:

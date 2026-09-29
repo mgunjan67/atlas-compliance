@@ -8,6 +8,17 @@ from atlas.scheduler import LiveScheduler
 
 
 class SchedulerTests(unittest.TestCase):
+    def test_failed_manual_check_clears_busy_and_does_not_show_old_success(self):
+        with patch('atlas.scheduler.connect',return_value=FakeConnection()),patch('atlas.scheduler.poll_once',side_effect=OSError('Archive write failed')):
+            scheduler=LiveScheduler('unused.db','employees.csv')
+            scheduler._last_result={'summary':{'total':48}}
+            scheduler.request_check()
+            scheduler._manual_thread.join(2)
+            state=scheduler.status()
+            self.assertFalse(state['checking'])
+            self.assertIsNone(state['last_result'])
+            self.assertEqual(state['last_error'],'Archive write failed')
+            self.assertIsNotNone(state['started_at'])
     def test_start_runs_one_poll_and_stop_prevents_repeat(self):
         checked = threading.Event()
         calls = []

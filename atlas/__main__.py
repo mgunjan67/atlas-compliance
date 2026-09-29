@@ -49,14 +49,13 @@ def main():
     poll.add_argument('--archive-root',default='output/live-archive')
     d=sub.add_parser('demo');d.add_argument('--output',default='output');
     a=sub.add_parser('audit');a.add_argument('--output',default='output/audit.json')
-    s=sub.add_parser('serve');s.add_argument('--port',type=int,default=8787);s.add_argument('--employees',default='data/employees.csv');s.add_argument('--demo-db')
+    s=sub.add_parser('serve');s.add_argument('--port',type=int,default=8787);s.add_argument('--employees',default='data/employees.csv')
     lab=sub.add_parser('lab');lab.add_argument('--output',default='output/lab-report.json')
     story=sub.add_parser('story');story.add_argument('--output',default='output/reviewer-story')
     rc=sub.add_parser('receipt');rc.add_argument('id');rc.add_argument('--output',default='output/decision-receipt.json')
     v=sub.add_parser('verify');v.add_argument('file');v.add_argument('--expected-digest')
     sub.add_parser('verify-audit')
     jobs=sub.add_parser('process-jobs');jobs.add_argument('--date',default=today());jobs.add_argument('--employees',default='data/employees.csv')
-    ai=sub.add_parser('ai-audit');ai.add_argument('snapshot_id')
     args=p.parse_args()
     if args.command=='demo' and args.db=='data/atlas-v2.sqlite3': args.db='data/demo-v2.sqlite3'
     if args.command=='story' and args.db=='data/atlas-v2.sqlite3': args.db='data/story-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%f')+'.sqlite3'
@@ -71,6 +70,9 @@ def main():
             review(db,args.id,args.decision,args.actor,args.reason,args.supersedes)
             out={'reviewed':args.id,'decision':args.decision}
         elif args.command=='evaluate':
+            if args.annualize_salary:
+                if args.output=='output/live-results.json': args.output='output/salary-what-if.json'
+                elif 'live' in Path(args.output).name.lower(): raise ValueError('Use a separate scenario export filename for salary what-if results')
             results=run_evaluation(db,load_employees(args.employees),args.date,args.annualize_salary,known_at=args.known_at)
             export_results(results,args.output);out={'results':args.output,'counts':summary(results)}
         elif args.command=='audit':
@@ -82,7 +84,7 @@ def main():
             out=run_demo(db,args.output)
         elif args.command=='serve':
             from .web import serve
-            db.close();serve(args.db,args.employees,args.port,args.demo_db);return
+            db.close();serve(args.db,args.employees,args.port);return
         elif args.command=='lab':
             from .lab import write_report
             result=write_report(args.output)
@@ -110,9 +112,6 @@ def main():
         elif args.command=='process-jobs':
             from .workflow import process_jobs
             out=process_jobs(db,load_employees(args.employees),args.date)
-        elif args.command=='ai-audit':
-            from .ai import audit_snapshot
-            out=audit_snapshot(db,args.snapshot_id)
         elif args.command=='poll-once':
             from .operations import poll_once
             out=poll_once(db,args.employees,args.output,args.archive_root)

@@ -1,10 +1,10 @@
 # Validation record
 
-Verified locally on 24–25 September 2026. These are observed results, not guarantees of legal correctness or general AI accuracy.
+Verified locally on 28 September 2026. These are observed results, not guarantees of legal correctness or general AI accuracy.
 
 ## Automated verification
 
-`python -m unittest discover -s tests -v`: **62 tests passed**. The suite covers:
+`python -m unittest discover -s tests -v`: **103 tests passed**. The suite covers:
 
 - Precedence in both directions, equality, subcent comparisons, exact weekly arithmetic, missing/invalid inputs and unsupported scope.
 - Daily expiry without fallback, future-effective dates, pending review, conflicting versions and explicit supersession.
@@ -15,11 +15,16 @@ Verified locally on 24–25 September 2026. These are observed results, not guar
 - Atomic review/job writes; recovery after job failure; idempotent flags; historical backfill after an employee changes jurisdiction.
 - Modified receipt/source detection, separately trusted receipt digests and altered audit-event detection.
 - Hidden content exclusion, a quarantined instruction fixture and cross-source rate disagreement.
-- Optional model-output validation: wrong amounts, invented quotes, added approval fields and omitted items are rejected. Request contains no employee input or tools.
-- An actual temporary HTTP server: historical export matches earlier knowledge; invalid host and missing mutation token are rejected.
+- An actual temporary HTTP server: combined inspection exports retain the original evaluation IDs; invalid host and missing mutation token are rejected; removed replay endpoints cannot create demo databases.
+- Missing-wage warnings identify the current employee-data problem while preserving previous results and receipts. Retained-result exports carry the same warning.
+- Each new retrieval stores its own comparison, including B → A when A's snapshot already exists; unchanged checks have an empty diff. Existing snapshot records remain intact for old receipts.
+- A cold browser recovers the complete approved or resolved same-day inspection when a pending update has already replaced operational flags. A newer saved inspection takes precedence over an older display cache.
+- Returning final notices, guidance and corrections get fresh review occurrences; repeat checks remain idempotent. Both old and newly approved recurrence receipts replay.
+- Unsupported decimal precision, signed/comma-separated amounts and restricted or unfamiliar notice scope cannot become complete numerical proposals. Unchanged supported publications retain their identities across the parser upgrade; historical v3 receipts still use their original parser.
+- Partial polls retain failed historical jobs and valid current archives. Retrying completes failed jobs without duplicate approvals or flags.
 - A full offline poll cycle: both source checks, 48 re-evaluations, dated JSON/CSV archive, checksum manifest, audit event, and no implicit approval.
 - A placeholder live-review reason is rejected before an immutable approval can be written.
-- The actual September 25 operator path: approving both rates leaves 32 hourly decisions blocked by the coverage correction; an explicit coverage acknowledgment clears those 32 while 16 employee-data/policy cases stay in review.
+- The actual September 25 operator path: approving both rates leaves 32 hourly decisions blocked by the coverage correction; an explicit coverage acknowledgment clears those 32; unchanged guidance is already handled by the implemented policy while 16 employee-data/policy cases stay in review.
 
 ## Executable scenario lab
 
@@ -32,7 +37,7 @@ Verified locally on 24–25 September 2026. These are observed results, not guar
 | Actual engine mutations | 5 / 5 caught | Lower floor, equality failure, future activation, ignored expiry, missing-state fallback |
 | Instruction-like source fixture | Quarantined | Specific triage pattern; not complete injection detection |
 
-The oracle uses an independent arithmetic representation rather than calling the engine's rounding helper. Mutation checks compile intentionally modified copies of this project's own engine in memory; they never execute source-page instructions. The generated tests are bounded and synthetic, not a broad regulatory benchmark or an LLM evaluation dataset. Some of these checks are also exercised by the 62-test suite; their counts should not be added as independent coverage claims.
+The oracle uses an independent arithmetic representation rather than calling the engine's rounding helper. Mutation checks compile intentionally modified copies of this project's own engine in memory; they never execute source-page instructions. The generated tests are bounded and synthetic, not a broad regulatory benchmark or an LLM evaluation dataset. Some of these checks are also exercised by the 103-test suite; their counts should not be added as independent coverage claims.
 
 ## Supplied-dataset replay
 
@@ -46,6 +51,10 @@ The oracle uses an independent arithmetic representation rather than calling the
 
 ## Browser verification
 
+On 28 September, an isolated copy with AST-0001's hourly wage removed showed an employee-data warning, its exact current error, and the unchanged saved wage/receipt in the employee dialog. Selecting the September 25 inspection made both sidebar and employee-page export links target the same saved inspection. The simplified live Overview showed 21 below minimum, 11 meeting minimum and 16 review cases; automatic checks remained off and no browser console errors were observed. The Overview now presents results, source checks and any pending inspection; detailed salary analysis remains in employee records. The old web replay and per-rule history routes were removed; the tested CLI story remains available.
+
+Earlier browser checks below describe the UI at the time of each check; removed replay controls are no longer part of the current console.
+
 The local console was exercised through actual browser controls: correction discovery, impact preview, named simulated review with supersession, resulting 23/9/16 counts, AST-0025's 47.20 weekly estimate, receipt verification, and earlier-knowledge restoration of its COMPLIANT state. The review-form check found and fixed a real DOM issue: a named `id` input shadowed the form's `id` property. The retest completed the approval through the UI.
 
 The overview was visually checked in the in-app browser. This is a focused manual browser check, not an automated cross-browser or full accessibility audit. JavaScript syntax was also checked with Node.
@@ -56,7 +65,11 @@ The live operator path was checked again after the decision-readiness redesign. 
 
 The annual-salary flow was also checked in the browser: the overview link filters to 16 records, and AST-0003's receipt displays its annual amount, a clearly non-decisional hourly illustration, the approved reference floor, and three requirements for a final review. A future-start salary record has a fourth requirement to confirm employment timing. The formal result stays REVIEW_REQUIRED and actual hourly pay stays null.
 
+The live Rule review archive was visually checked after grouping its 13 records by effect. The September 27 daily rates appear as active; January 2027 notices appear as pending and inactive; the acknowledged coverage clarification appears under interpretations without a new rate; proposals, news and expired daily cards have their own concise groups. Opening Bellwether guidance shows its type as Interpretation while its human review remains open.
+
 ## Packaged handoff
+
+September 28 priority fixes add seven regression cases: pending/approved/rejected daily-publication reversions; complete next-day pair impact; federal overtaking an unchanged state rate; unavailable baseline handling; and linked resolved result snapshots after coverage review. Recurring publication receipts verify against the original source text and the new occurrence identity. Original approvals and result snapshots remain immutable. A real browser check confirmed that unsaved Scenario lab values and focus survive the one-minute refresh. An isolated QA server showed 32 changed hourly workers for a complete pair update and separate At approval / Resolved results history entries. No live source approvals were made during these checks. README and reviewer instructions now use the actual UI plus the CLI story for offline change demonstrations.
 
 `python -m scripts.package_submission` builds a dated curated ZIP and refreshes `output/atlas-submission.zip` to the same verified bytes. It checks member hashes and extracts into a fresh temporary directory. The extracted copy verifies the included original receipt, seeds a new database, produces 48 pending live-review results, runs the lab, creates a fresh story, verifies the newly generated receipt and passes the full test suite. The archive includes one byte-preserved pre-review live poll plus a separate offline evaluation from saved source pages that carries the current salary-review context. `output/live-results.provenance.json` labels that distinction. It excludes local rehearsal approvals, databases, environment secrets, caches and superseded demonstration exports. The generated dated `output/package-verification-*.json` records the archive digest and command outcomes.
 
@@ -66,4 +79,14 @@ Both allowlisted public pages were fetched through the implemented monitor and r
 
 An isolated fresh audit on 25 September at 14:31–14:32 UTC fetched both designated sites twice. The first pass extracted federal 12.91 and Bellwether 16.63 AST/hour for that date, the 2027 final notices, the coverage correction, guidance and irrelevant news. The second pass returned UNCHANGED for both sources with zero new candidates. The isolated audit database recorded zero reviews and is excluded from the submission.
 
-No live model request was made. Optional API quality, response compatibility with a particular chosen model, latency and cost remain unverified. Production identity, concurrency, external audit anchoring, full payroll history, actual-hour liability, complete prompt-injection defense and arbitrary legal-language interpretation were not tested or claimed.
+Production identity, concurrency, external audit anchoring, full payroll history, actual-hour liability, complete prompt-injection defense and arbitrary legal-language interpretation were not tested or claimed.
+
+## September 27 audit regressions
+
+The expanded suite reproduces and guards against unseen publication containers, changed unmapped prose, negated proposal labels, numerical rules under news, narrowed card/notice coverage, pending interpretation, generic acknowledgment of unknown content, salary scenarios mutating live history, conflicting prior floors, and input reversion chronology. Manual checks return while a mocked slow fetch is running.
+
+The fresh browser replay was tested after these changes: guided entry, 16.63 → 18.50 review, simulated approval, AST-0025's 47.20 weekly estimate and receipt verification. The employee view now has four options: Actual results (32 hourly records), All decisions (48 including salary proxies), Approved results (completed decisions) and Review required (including missing-data cases). Browser checks verified salary proxies appear only in All decisions. Live source fetching were not exercised during this offline verification.
+
+Unfamiliar prose can require adapter repair; the text guard is deliberately conservative, not a universal legal classifier. Old engine receipts require the matching historical implementation; regenerated submission receipts match this release.
+
+Manual-check completion was subsequently tested against both real assigned websites on September 27. The browser automatically showed No changes found, updated both source timestamps, confirmed 48 archived results and re-enabled the button without a page refresh. A regression check covers unchanged candidates linked to newer snapshots; another covers failed archiving clearing the busy state and suppressing stale success. No approvals were made.

@@ -25,10 +25,10 @@ Objective: deliver a reviewable minimum-wage operating slice for the two assigne
 | Employee outputs and traceability | output/live-results.*; output/reviewer-story/*.json and *.csv |
 | Change-driven employee re-evaluation | atlas/workflow.py; story report and audit export |
 | Reproducibility and historical explanation | before/after/as-known outputs; two verifiable receipts |
-| Tests and failure cases | 62 unit/integration tests; lab report; docs/validation.md |
-| AI boundary and disclosure | atlas/ai.py; docs/disclosure.md |
+| Tests and failure cases | 103 unit/integration tests; lab report; docs/validation.md |
+| Implementation choice and development disclosure | README.md; docs/disclosure.md |
 | Five-to-ten-minute walkthrough | docs/walkthrough.md; candidate records or presents |
 
 ## Final human handoff
 
-The candidate should rehearse from a fresh replay database, inspect source evidence, understand the salary/coverage/time assumptions, and record the demonstration. Approximately 18 hours have been reported by the candidate. Publication and delivery to the employer remain candidate actions. The assistant has not supplied a recording or a public repository link.
+The candidate should rehearse the live review path and the isolated CLI correction story, inspect source evidence, understand the salary/coverage/time assumptions, and record the demonstration. The candidate confirmed approximately 18 hours of personal time on 28 September 2026. Publication and delivery to the employer remain candidate actions. The recording remains outstanding.

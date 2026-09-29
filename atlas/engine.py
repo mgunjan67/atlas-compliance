@@ -5,10 +5,23 @@ from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from .store import candidates, now, digest, dumps, audit
 
-ENGINE_VERSION = 'engine-v2'
+ENGINE_VERSION = 'engine-v3.1'
 CENT = Decimal('0.01')
 RELEVANT_FIELDS = ('employee_id','work_country','work_state','work_location_code','pay_basis','hourly_rate_ast',
                    'annual_salary_ast','scheduled_hours_per_week','currency','employment_status','minimum_wage_coverage','start_date')
+
+# Exact captured guidance supporting the already implemented higher-floor and
+# work-location policies. This is not an approval of a numerical wage rule.
+# Bind to evidence, not just IDs: a revision to either publication must be reviewed.
+IMPLEMENTED_GUIDANCE = {
+    'BDL-2026-0121':'47b8d372aef6612dd26353940645bb8f3e2782402418d363d4cdc2342673420d',
+    'BDL-2026-0108':'e56bd1f9e5cb641749d95c47390533465ccdb3ce0bf279fbe0cb94f943975b74',
+}
+
+def implemented_guidance(rule):
+    return (rule.get('classification')=='INTERPRETATION' and rule.get('source')=='bellwether'
+            and rule.get('jurisdiction')=='Bellwether' and rule.get('state')!='REJECTED'
+            and IMPLEMENTED_GUIDANCE.get(rule.get('source_rule_id'))==digest(rule.get('evidence','')))
 
 def number(value, positive=False):
     try: n = Decimal(str(value))
@@ -98,7 +111,8 @@ def evaluate(employee, rules, evaluation_date, annualize_salary=False, health_is
     except ValueError as err: return stop('INSUFFICIENT_DATA','Pay input: '+str(err))
     result['actual_hourly_wage']=str(hourly)
     if health_issues: return stop('REVIEW_REQUIRED','Source freshness/availability: '+'; '.join(health_issues),'SOURCE_HEALTH_REVIEW')
-    pending=[r for r in applicable if r['state']=='REVIEW_REQUIRED' and r['classification'] in ('RATE_REVIEW','REVIEW_REQUIRED','SECURITY_REVIEW')
+    pending=[r for r in applicable if r['state']=='REVIEW_REQUIRED' and r['classification'] in ('RATE_REVIEW','REVIEW_REQUIRED','SECURITY_REVIEW','INTERPRETATION')
+             and not implemented_guidance(r)
              and (not r.get('effective_to') or evaluation_date<r['effective_to'])]
     if pending: return stop('REVIEW_REQUIRED','Unresolved relevant source content: '+', '.join(r['id'][:12] for r in pending),'PENDING_SOURCE_REVIEW')
     approved=[r for r in applicable if r['state']=='APPROVED']
@@ -148,7 +162,10 @@ def source_health(db, evaluation_date, simulated=False, known_at=None):
         if row:
             observations.extend((source,o) for o in json.loads(row['data']) if o['kind']=='corroboration')
             from .extract import extract
-            source_rules,_,_=extract(row['raw_html'],row['source'])
+            try: source_rules,_,_=extract(row['raw_html'],row['source'])
+            except ValueError:
+                issues[source]='Saved source needs review under the current extraction checks'
+                continue
             for r in source_rules:
                 if r['kind']=='DAILY_RATE':cards[r['jurisdiction']]=(r['effective_from'],r['amount'])
     for source,o in observations:
@@ -166,6 +183,25 @@ def run_evaluation(db, employees, day, annualize_salary=False, simulated=False, 
         known_at=parsed.astimezone(timezone.utc).isoformat()
     rules=[r for r in candidates(db,known_at) if r['simulated']==simulated]
     issues=source_health(db,day,simulated,known_at)
+    if annualize_salary:
+        # What-if outputs never enter the operational result/flag/history tables.
+        output=[]
+        for employee in employees:
+            relevant=['federal']+(['bellwether'] if employee.get('work_state')=='Bellwether' else [])
+            result=evaluate(employee,rules,day,True,[s+': '+issues[s] for s in relevant if s in issues])
+            result.update(simulated=True,evaluation_mode='SALARY_WHAT_IF_ONLY',knowledge_cutoff=known_at,
+                          scenario_only=True,operational_decision=False)
+            if employee.get('pay_basis')=='Annual Salary':
+                result.update(scenario_hourly_equivalent=result['actual_hourly_wage'],
+                              scenario_decision=result['decision_state'],
+                              scenario_hourly_shortfall=result['hourly_shortfall'],
+                              scenario_weekly_shortfall=result['estimated_weekly_underpayment'],
+                              actual_hourly_wage=None,hourly_shortfall=None,estimated_weekly_underpayment=None,
+                              decision_state='REVIEW_REQUIRED',reason_code='SALARY_CONVERSION_UNAPPROVED',
+                              next_action='Illustration only. Obtain an approved comparison method and actual hours before a compliance decision.')
+            result['evaluation_id']=digest({k:v for k,v in result.items() if k!='evaluation_timestamp'})
+            output.append(result)
+        return output
     output=[]
     with db:
         for employee in employees:
@@ -177,6 +213,7 @@ def run_evaluation(db, employees, day, annualize_salary=False, simulated=False, 
             result['knowledge_cutoff']=known_at
             identity={k:v for k,v in result.items() if k!='evaluation_timestamp'}
             result['evaluation_id']=digest(identity)
+            observed_at=result['evaluation_timestamp']
             prior=db.execute('SELECT data FROM evaluations WHERE id=?',(result['evaluation_id'],)).fetchone()
             if prior: result=json.loads(prior['data'])
             else:
@@ -189,11 +226,13 @@ def run_evaluation(db, employees, day, annualize_salary=False, simulated=False, 
                 existing=db.execute('SELECT status,evaluation_id FROM flags WHERE id=?',(flag_id,)).fetchone()
                 state={'NON_COMPLIANT':'OPEN','COMPLIANT':'CLEAR'}.get(result['decision_state'],'REVIEW')
                 if not existing or existing['evaluation_id']!=result['evaluation_id']:
+                    db.execute('INSERT INTO evaluation_observations(evaluation_id,observed_at) VALUES(?,?)',
+                               (result['evaluation_id'],observed_at))
                     db.execute('''INSERT INTO flags VALUES(?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET
                                   status=excluded.status,evaluation_id=excluded.evaluation_id,updated_at=excluded.updated_at''',
-                               (flag_id,employee['employee_id'],day,state,result['evaluation_id'],result['evaluation_timestamp'],int(simulated)))
+                               (flag_id,employee['employee_id'],day,state,result['evaluation_id'],observed_at,int(simulated)))
                     audit(db,'FLAG_TRANSITION',{'flag_id':flag_id,'from':existing['status'] if existing else None,'to':state,
-                                              'evaluation_id':result['evaluation_id'],'simulated':simulated},result['evaluation_timestamp'])
+                                              'evaluation_id':result['evaluation_id'],'simulated':simulated},observed_at)
             output.append(result)
     return output
 

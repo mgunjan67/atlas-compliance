@@ -1,6 +1,7 @@
 import hashlib
 import json
 import sqlite3
+from contextlib import nullcontext
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -27,6 +28,9 @@ def connect(path):
     CREATE TABLE IF NOT EXISTS fetches (
         id INTEGER PRIMARY KEY, source TEXT NOT NULL, fetched_at TEXT NOT NULL, status TEXT NOT NULL,
         snapshot_id TEXT, detail TEXT NOT NULL, simulated INTEGER NOT NULL DEFAULT 0);
+    CREATE TABLE IF NOT EXISTS fetch_diffs (
+        fetch_id INTEGER PRIMARY KEY REFERENCES fetches(id),
+        previous_snapshot_id TEXT REFERENCES snapshots(id), diff TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS candidates (
         id TEXT PRIMARY KEY, snapshot_id TEXT NOT NULL REFERENCES snapshots(id),
         data TEXT NOT NULL, discovered_at TEXT NOT NULL, simulated INTEGER NOT NULL);
@@ -38,6 +42,20 @@ def connect(path):
     CREATE TABLE IF NOT EXISTS evaluations (
         id TEXT PRIMARY KEY, employee_id TEXT NOT NULL, evaluation_date TEXT NOT NULL,
         created_at TEXT NOT NULL, data TEXT NOT NULL, simulated INTEGER NOT NULL);
+    CREATE TABLE IF NOT EXISTS result_views (
+        evaluation_date TEXT PRIMARY KEY, saved_at TEXT NOT NULL, data TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS review_batches (
+        id TEXT PRIMARY KEY, evaluation_date TEXT NOT NULL, data TEXT NOT NULL,
+        state TEXT NOT NULL, reviewed_at TEXT, actor TEXT, results TEXT);
+    CREATE TABLE IF NOT EXISTS legacy_result_sets (
+        id TEXT PRIMARY KEY, data TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS batch_result_versions (
+        id TEXT PRIMARY KEY, batch_id TEXT NOT NULL REFERENCES review_batches(id),
+        saved_at TEXT NOT NULL, results TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS dummy_runs (
+        id TEXT PRIMARY KEY, data TEXT NOT NULL);
+    CREATE TABLE IF NOT EXISTS evaluation_observations (
+        id INTEGER PRIMARY KEY, evaluation_id TEXT NOT NULL REFERENCES evaluations(id), observed_at TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS audit (
         id INTEGER PRIMARY KEY, event TEXT NOT NULL, at TEXT NOT NULL, data TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS ledger (
@@ -86,7 +104,7 @@ def candidates(db, known_at=None):
                           supersedes=r['supersedes'] if reviewed else None,simulated=bool(r['simulated'])))
     return items
 
-def review(db, candidate_id, decision, actor, reason, supersedes=None, allow_simulated=False, at=None):
+def review(db, candidate_id, decision, actor, reason, supersedes=None, allow_simulated=False, at=None, commit=True):
     if not actor.strip() or not reason.strip():
         raise ValueError('Reviewer name and reason are required')
     items = {c['id']:c for c in candidates(db)}
@@ -117,9 +135,11 @@ def review(db, candidate_id, decision, actor, reason, supersedes=None, allow_sim
         raise ValueError('Approve or reject numerical rules explicitly')
     if decision == 'ACKNOWLEDGED' and c['classification']=='SECURITY_REVIEW':
         raise ValueError('Quarantined content must be rejected; acknowledgment cannot activate it')
+    if decision == 'ACKNOWLEDGED' and c.get('kind')=='UNKNOWN':
+        raise ValueError('Unknown publication cannot be cleared by acknowledgment; investigate and explicitly reject unsupported evidence')
     timestamp=at or now()
     if timestamp<c['discovered_at']: raise ValueError('Review cannot precede discovery')
-    with db:
+    with db if commit else nullcontext():
         db.execute('INSERT INTO reviews(candidate_id,decision,actor,reason,reviewed_at,supersedes) VALUES(?,?,?,?,?,?)',
                    (candidate_id,decision,actor,reason,timestamp,supersedes))
         audit(db,'RULE_'+decision,dict(candidate_id=candidate_id,actor=actor,reason=reason,supersedes=supersedes,simulated=c['simulated']),timestamp)

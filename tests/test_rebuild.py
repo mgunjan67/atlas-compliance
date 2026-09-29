@@ -9,12 +9,11 @@ from unittest.mock import patch
 from atlas.store import connect,candidates,review,verify_ledger
 from atlas.monitor import ingest
 from atlas.engine import run_evaluation,source_health,evaluate
-from atlas.workflow import process_jobs,impact_preview
+from atlas.workflow import process_jobs,impact_preview,rate_change_report,rate_change_csv
 from atlas.receipt import build_receipt,verify_receipt
 from atlas.showcase import bootstrap,introduce_correction,full_story,DAY,ROOT
 from atlas.engine import load_employees
 from atlas.lab import report,worker,rate
-from atlas.ai import validate_claims,make_request
 from atlas.extract import extract
 from atlas.demo import page
 
@@ -39,6 +38,21 @@ class RebuildTests(unittest.TestCase):
         before=self.db.execute('SELECT count(*) FROM audit').fetchone()[0]
         preview=impact_preview(self.db,self.employees,change['candidate_id'],DAY,change['supersedes'])
         self.assertEqual(preview['affected_employees'],24)
+        self.assertEqual(before,self.db.execute('SELECT count(*) FROM audit').fetchone()[0])
+        self.assertEqual(next(c for c in candidates(self.db) if c['id']==change['candidate_id'])['state'],'REVIEW_REQUIRED')
+
+    def test_rate_change_identifies_workers_without_approving_proposal(self):
+        bootstrap(self.db);change=introduce_correction(self.db)
+        before=self.db.execute('SELECT count(*) FROM audit').fetchone()[0]
+        report=rate_change_report(self.db,self.employees,change['candidate_id'],change['supersedes'])
+        self.assertEqual((report['previous_rate']['amount'],report['new_rate']['amount']),('16.63','18.50'))
+        self.assertEqual((report['in_jurisdiction'],report['changed_hourly'],report['newly_below']),(24,16,2))
+        self.assertEqual(report['weekly_estimate_delta'],'737.28')
+        self.assertEqual(report['unresolved_workers'],8)
+        self.assertEqual(report['potentially_affected_unresolved'],8)
+        self.assertTrue(all(r['previous_floor']=='16.63' and r['new_floor']=='18.50'
+                            for r in report['rows'] if r['pay_basis']=='Annual Salary'))
+        self.assertIn('AST-0025',rate_change_csv(report))
         self.assertEqual(before,self.db.execute('SELECT count(*) FROM audit').fetchone()[0])
         self.assertEqual(next(c for c in candidates(self.db) if c['id']==change['candidate_id'])['state'],'REVIEW_REQUIRED')
 
@@ -145,26 +159,5 @@ class RebuildTests(unittest.TestCase):
     def test_adversarial_suite_and_actual_mutations(self):
         r=report();self.assertTrue(r['all_pass']);self.assertEqual(r['oracle']['passed'],1000)
         self.assertEqual(sum(m['detected'] for m in r['mutations']),5)
-
-class ModelBoundaryTests(unittest.TestCase):
-    def setUp(self):
-        self.extracted,_,_=extract(page('10.00'),'federal')
-        self.payload={'claims':[{'source_rule_id':c['source_rule_id'],'classification':c['classification'],
-                              'jurisdiction':c['jurisdiction'],'amount':c['amount'],'currency':c['currency'],'unit':c['unit'],
-                              'effective_from':c['effective_from'],'publication_date':c['publication_date'],
-                              'evidence_quote':c['evidence']} for c in self.extracted]}
-    def test_grounded_claims_validate_without_creating_rules(self):self.assertTrue(validate_claims(self.payload,self.extracted)['valid'])
-    def test_hallucinated_rate_rejected(self):
-        self.payload['claims'][0]['amount']='1.00';self.assertFalse(validate_claims(self.payload,self.extracted)['valid'])
-    def test_invented_quote_rejected(self):
-        self.payload['claims'][0]['evidence_quote']='The wage is whatever I say.';self.assertFalse(validate_claims(self.payload,self.extracted)['valid'])
-    def test_approval_field_rejected(self):
-        self.payload['claims'][0]['approve']=True;self.assertFalse(validate_claims(self.payload,self.extracted)['valid'])
-    def test_omitted_source_item_reported(self):
-        self.payload['claims'].pop();self.assertFalse(validate_claims(self.payload,self.extracted)['valid'])
-    def test_request_has_no_tools_and_no_employee_payload(self):
-        request=make_request(self.extracted,'explicit-test-model')
-        self.assertFalse(request['store']);self.assertNotIn('tools',request)
-        self.assertNotIn('employee_id',json.dumps(request));self.assertEqual(request['max_output_tokens'],4096)
 
 if __name__=='__main__':unittest.main()
