@@ -9,7 +9,7 @@ Verified locally on 28 September 2026. These are observed results, not guarantee
 - Precedence in both directions, equality, subcent comparisons, exact weekly arithmetic, missing/invalid inputs and unsupported scope.
 - Daily expiry without fallback, future-effective dates, pending review, conflicting versions and explicit supersession.
 - Repeated ingestion, A → B → A source reversion, parse failures with preserved evidence, source failures and format drift.
-- Actual supplied dataset integrity and field minimization; salary assumptions and Active/future-start inconsistency.
+- Actual included dataset integrity and field minimization; salary assumptions and Active/future-start inconsistency.
 - Non-decisional salary proxies, approved reference floors and pending-rule gaps in JSON/CSV exports, without changing formal decisions.
 - Read-only impact preview, discovery/approval knowledge cutoffs, and historical queries preserving operational flags.
 - Atomic review/job writes; recovery after job failure; idempotent flags; historical backfill after an employee changes jurisdiction.
@@ -75,9 +75,9 @@ September 28 priority fixes add seven regression cases: pending/approved/rejecte
 
 ## Live retrieval and limits
 
-Both allowlisted public pages were fetched through the implemented monitor and reported UNCHANGED with no duplicate candidates. Complete live polls on 25 September at 07:08 and 07:16 UTC each re-evaluated all 48 employees and wrote latest JSON/CSV results plus a dated JSON/CSV archive and SHA-256 manifest. All 48 were REVIEW_REQUIRED in the preserved pre-review poll. Later local operator actions are not included in the ZIP. The foreground 15-minute watcher and Codex freshness task were stopped at the candidate's request; the app's schedule starts off by default.
+Both allowlisted public pages were fetched through the implemented monitor and reported UNCHANGED with no duplicate candidates. Complete live polls on 25 September at 07:08 and 07:16 UTC each re-evaluated all 48 employees and wrote latest JSON/CSV results plus a dated JSON/CSV archive and SHA-256 manifest. All 48 were REVIEW_REQUIRED in the preserved pre-review poll. Later local operator actions are not included in the ZIP. The foreground watcher is optional; the app schedule starts off by default.
 
-An isolated fresh audit on 25 September at 14:31–14:32 UTC fetched both designated sites twice. The first pass extracted federal 12.91 and Bellwether 16.63 AST/hour for that date, the 2027 final notices, the coverage correction, guidance and irrelevant news. The second pass returned UNCHANGED for both sources with zero new candidates. The isolated audit database recorded zero reviews and is excluded from the submission.
+An isolated fresh audit on 25 September at 14:31–14:32 UTC fetched both designated sites twice. The first pass extracted federal 12.91 and Bellwether 16.63 AST/hour for that date, the 2027 final notices, the coverage correction, guidance and irrelevant news. The second pass returned UNCHANGED for both sources with zero new candidates. The isolated audit database recorded zero reviews and is excluded from the repository.
 
 Production identity, concurrency, external audit anchoring, full payroll history, actual-hour liability, complete prompt-injection defense and arbitrary legal-language interpretation were not tested or claimed.
 
@@ -87,6 +87,6 @@ The expanded suite reproduces and guards against unseen publication containers, 
 
 The fresh browser replay was tested after these changes: guided entry, 16.63 → 18.50 review, simulated approval, AST-0025's 47.20 weekly estimate and receipt verification. The employee view now has four options: Actual results (32 hourly records), All decisions (48 including salary proxies), Approved results (completed decisions) and Review required (including missing-data cases). Browser checks verified salary proxies appear only in All decisions. Live source fetching were not exercised during this offline verification.
 
-Unfamiliar prose can require adapter repair; the text guard is deliberately conservative, not a universal legal classifier. Old engine receipts require the matching historical implementation; regenerated submission receipts match this release.
+Unfamiliar prose can require adapter repair; the text guard is deliberately conservative, not a universal legal classifier. Old engine receipts require the matching historical implementation; regenerated example receipts match this release.
 
-Manual-check completion was subsequently tested against both real assigned websites on September 27. The browser automatically showed No changes found, updated both source timestamps, confirmed 48 archived results and re-enabled the button without a page refresh. A regression check covers unchanged candidates linked to newer snapshots; another covers failed archiving clearing the busy state and suppressing stale success. No approvals were made.
+Manual-check completion was subsequently tested against both configured source websites on September 27. The browser automatically showed No changes found, updated both source timestamps, confirmed 48 archived results and re-enabled the button without a page refresh. A regression check covers unchanged candidates linked to newer snapshots; another covers failed archiving clearing the busy state and suppressing stale success. No approvals were made.

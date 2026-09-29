@@ -134,6 +134,6 @@ The story uses saved source pages and the included employees in an isolated simu
 | [Operator guide](docs/operator-review.md) | Evidence inspection, review decisions and result history |
 | [Validation report](docs/validation.md) | Automated checks, observed results and testing limits |
 | [Development disclosure](docs/disclosure.md) | Development assistance and simulation provenance |
-| [Requirement map](PLAN.md) | Requirements mapped to implementation evidence |
+| [Implementation map](PLAN.md) | Capabilities mapped to implementation evidence |
 
 The repository includes the [employee CSV](data/employees.csv), [captured source pages](data/research/), [a preserved pre-review live check](output/live-archive/2026-09-25/), and [simulated before/after results, audit events and receipts](output/reviewer-story/). Simulated outputs are labelled; they are not evidence of live approvals. The [scenario report](output/lab-report.json) records the automated lab checks.

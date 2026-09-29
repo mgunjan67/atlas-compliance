@@ -1,10 +1,10 @@
 # Atlas research memo
 
-Evidence: captured September 24–25, 2026; implementation reviewed September 28. All authorities and employees are fictional assessment material. Source facts, implementation policies and unresolved inputs are distinguished below.
+Evidence: captured September 24–25, 2026; implementation reviewed September 28. All authorities and employees are fictional sample data. Source facts, implementation policies and unresolved inputs are distinguished below.
 
 ## Source findings
 
-The assignment designates the [Asterian federal page](https://asterian-federal-wage-site.vercel.app/) and [Bellwether state page](https://bellwether-state-wage-site.vercel.app/). Atlas retrieves only those HTTPS origins. Their server-rendered HTML contains rate cards, publications and metadata. Raw copies, retrieval times and SHA-256 manifests are in `data/research/`. Extraction ignores scripts and hidden elements; it does not read internal databases or publication schedules.
+Atlas monitors the [Asterian federal page](https://asterian-federal-wage-site.vercel.app/) and [Bellwether state page](https://bellwether-state-wage-site.vercel.app/). Atlas retrieves only those HTTPS origins. Their server-rendered HTML contains rate cards, publications and metadata. Raw copies, retrieval times and SHA-256 manifests are in `data/research/`. Extraction ignores scripts and hidden elements; it does not read internal databases or publication schedules.
 
 | Publication | Observed content | Treatment |
 |---|---|---|
@@ -33,7 +33,7 @@ The amount parser validates the entire numeric token; unsupported precision is n
 
 ## Employee findings and arithmetic
 
-The supplied dataset has 48 employees: 24 in each location, 32 hourly and 16 annual-salary records. Four are Active with December start dates. The minimized CSV retains the 12 fields needed for decisions; unrelated personal, demographic and bank fields are excluded.
+The included dataset has 48 employees: 24 in each location, 32 hourly and 16 annual-salary records. Four are Active with December start dates. The minimized CSV retains the 12 fields needed for decisions; unrelated personal, demographic and bank fields are excluded.
 
 Hourly shortfall is `max(0, approved floor − recorded hourly wage)`. Compare exact Decimal amounts first, then round reported money half-up to two decimals. Weekly shortfall uses scheduled weekly hours and is only an estimate. Equality passes.
 
@@ -49,6 +49,6 @@ Every check records success, change or error for both sources. Failed fetches, u
 
 ## Implementation choice and remaining limits
 
-The submitted workflow uses deterministic extraction and classification for these two structured sources. Ambiguous or unsupported publications require human review. AI is optional in the assignment; no runtime model integration is included.
+Atlas uses deterministic extraction and classification for these two structured sources. Ambiguous or unsupported publications require human review. No runtime model integration is included.
 
-The project tests one complete correction using the real supplied records and clearly simulated approvals. Repeated calculations are deduplicated, while new input transitions retain their observation time. Historical backfill covers only inputs previously recorded. Broader document layouts, employer coverage, salary policy and production identity/history require further work with the domain owner. Authentication and full payroll integration are outside this assessment slice.
+The project tests one complete correction using the included employee records and clearly simulated approvals. Repeated calculations are deduplicated, while new input transitions retain their observation time. Historical backfill covers only inputs previously recorded. Broader document layouts, employer coverage, salary policy and production identity/history require further work with the domain owner. Authentication and full payroll integration are outside the current project scope.

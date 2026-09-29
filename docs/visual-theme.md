@@ -1,12 +1,12 @@
-# Niural-inspired presentation
+# Atlas visual design
 
-The interview console follows the visual language of [Niural's public website](https://www.niural.com/), inspected on 25 September 2026. It remains clearly labelled as an interview prototype named Atlas.
+Atlas uses a violet accent palette, light panels and clear typography. The visual reference was [Niural's public website](https://www.niural.com/), inspected on 25 September 2026.
 
 ## Observed reference and adaptation
 
 | Website detail | Console adaptation |
 |---|---|
-| Violet-to-magenta announcement bar | Slim gradient ribbon identifying the Niural interview project |
+| Violet-to-magenta announcement bar | Slim gradient ribbon above the workspace |
 | Near-black text on white, with light neutral borders | White navigation, white panels and subtle lavender surfaces |
 | Inter body type; Inter Tight semibold headings | The same font families, bundled locally for offline use |
 | Violet primary calls to action and rounded controls | Violet action buttons, pill labels, rounded inputs and dialogs |
@@ -20,4 +20,4 @@ Compliance outcomes retain separate red, green and amber treatments and explicit
 
 Inter and Inter Tight are distributed under their SIL Open Font Licenses. Local WOFF2 files, license texts and source URLs are in `atlas/static/fonts/`. `scripts/fetch_theme_fonts.py` documents their acquisition from Google Fonts. The runtime uses only local assets; it makes no font-provider request.
 
-Atlas uses its own lettermark and favicon. The company name identifies the interview context; the prototype does not present itself as a released Niural product.
+Atlas uses its own lettermark and favicon. The visual reference does not imply that Atlas is an official Niural product.

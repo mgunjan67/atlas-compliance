@@ -1,6 +1,6 @@
 # Employee-result data audit and review triage
 
-Source: the 48-row `atlas-employee-results.json` exported from the **24 September 2026 replay while the synthetic 18.50 Bellwether correction is pending**. This is a fictional assessment dataset. Counts describe that snapshot, not the 25 September live review or real payroll liability.
+Source: the 48-row `atlas-employee-results.json` exported from the **24 September 2026 replay while the synthetic 18.50 Bellwether correction is pending**. This is a fictional sample dataset. Counts describe that snapshot, not the 25 September live review or real payroll liability.
 
 ## What the original export obscured
 

@@ -1,8 +1,8 @@
-# Atlas: reviewer brief
+# Atlas project overview
 
 **Product question:** When a wage authority corrects yesterday's rule, can an operator see the affected employees, make a justified decision, and still explain the original result?
 
-This submission implements that complete loop for the two fictional authorities and the supplied 48 employees. It treats approval, uncertainty and historical evidence as product behavior that a reviewer can inspect.
+Atlas implements that complete loop for the two fictional authorities and the included 48 employees. It treats approval, uncertainty and historical evidence as product behavior that a reviewer can inspect.
 
 ## Three things to try
 
@@ -28,8 +28,8 @@ There are 103 automated tests plus the executable scenario lab. The oracle indep
 
 ## Why this scope
 
-The brief asks for a trustworthy operating slice. The strongest evidence is a small workflow that continues to explain itself under correction, incomplete data and failure. The console makes that workflow easy to inspect; the CLI, exported results and receipts make the claims independently checkable.
+Atlas focuses on preserving explainable decisions through corrections, incomplete data and failures. The console makes that workflow easy to inspect; the CLI, exported results and receipts make the claims independently checkable.
 
-With another development day, the first priorities would be broader independently labelled publication cases and domain-owner agreement on salary/coverage policy. A broader autonomous agent would not solve the missing salary and coverage authority.
+Further work includes broader independently labelled publication cases and domain-owner agreement on salary/coverage policy. A broader autonomous agent would not solve the missing salary and coverage authority.
 
 Read [research](research.md) for source evidence, [README](../README.md) for setup, and [validation](validation.md) for verification results.

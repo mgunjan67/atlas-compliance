@@ -1,6 +1,6 @@
-# Concrete operator review
+# Atlas operator guide
 
-No live source-backed candidate has been approved by the AI assistant. The local operator interface contains the actual fetched evidence and the following items.
+Use the operator interface to inspect captured source evidence and decide whether a proposed rule can be applied. The examples below refer to saved source snapshots; use a fresh check for current rates.
 
 ## Numerical rule candidates
 
@@ -15,7 +15,7 @@ These are proposals in Atlas until you compare them with the preserved source ex
 
 ## Non-rate items
 
-- AFWA-2026-0038: coverage threshold changed from 24 to 25 employees. No employer headcount/full coverage table exists in the supplied dataset. Acknowledge only if you accept the explicit assessment assumption that the supplied Covered field has already resolved this issue. Otherwise leave it unresolved. This is a substantive review, not a routine dismiss action.
+- AFWA-2026-0038: coverage threshold changed from 24 to 25 employees. No employer headcount/full coverage table exists in the included dataset. Acknowledge only if you accept the explicit coverage assumption that the supplied Covered field has already resolved this issue. Otherwise leave it unresolved. This is a substantive review, not a routine dismiss action.
 - AFWA-2026-0031: proposed federal contract-work rule, not effective law. Reject as an active minimum-wage rule, or acknowledge it as a nonbinding proposal.
 - BDL-2026-0121: unchanged evidence supports the implemented higher-applicable-rate policy; no extra acknowledgment is needed.
 - BDL-2026-0108: unchanged evidence supports physical work-location applicability, including qualifying remote work; no extra acknowledgment is needed.
@@ -23,7 +23,7 @@ These are proposals in Atlas until you compare them with the preserved source ex
 
 In the console, enter your own name, inspect the saved source and tick the verification box. Atlas records a source-specific reason; you can add a note, and rejection requires an explanation. The CLI still requires a written reason. Do not use a generated reviewer identity or describe an AI action as a human approval.
 
-For the September 25 live dataset, approving the 12.91 and 16.63 daily rates is not the end of review. `AFWA-2026-0038` corrects an employer-size coverage threshold and still blocks 32 hourly decisions. The console links directly to that blocker and explains the missing employer headcount. An operator may acknowledge the correction only if they deliberately accept the supplied `Covered` field as an upstream coverage determination for this assessment. Otherwise the source review remains open. Twelve salary-conversion cases and four future-start inconsistencies are separate employee-level exceptions. Live review reasons must be at least 25 characters; this guards against placeholders but cannot verify factual quality.
+For the September 25 live dataset, approving the 12.91 and 16.63 daily rates is not the end of review. `AFWA-2026-0038` corrects an employer-size coverage threshold and still blocks 32 hourly decisions. The console links directly to that blocker and explains the missing employer headcount. An operator may acknowledge the correction only if they deliberately accept the supplied `Covered` field as an upstream coverage determination for these sample records. Otherwise the source review remains open. Twelve salary-conversion cases and four future-start inconsistencies are separate employee-level exceptions. Live review reasons must be at least 25 characters; this guards against placeholders but cannot verify factual quality.
 
 ## Review workflow
 
@@ -37,11 +37,11 @@ Use Employee decisions → Results from to inspect saved results and expand Appr
 
 While a new update is pending, the main screen keeps the latest complete source-cleared result set with its original date and a warning about the current problem. This also works when the approval was created before the browser was opened. It does not extend an expired rule or establish current compliance. A changed employee population cannot inherit an unrelated saved result set.
 
-## Employee assumptions to settle before submission
+## Employee data and policy requirements
 
 The default output keeps the 16 annual-salary rows in REVIEW_REQUIRED. Four of those also have Active status with future December start dates. Decide whether to keep that conservative scope or request clarification on the expected salary conversion and status handling. The optional annualization scenario must remain labelled as an assumption.
 
-## Candidate clarification questions (not sent)
+## Questions for the data owner
 
 1. Should annual salary be converted using 52 times scheduled weekly hours, or should salary records require review without actual-hour/pay-period rules?
 2. Should the supplied Covered field be treated as authoritative even though the source includes an employer-size coverage correction and employer headcount is absent?
@@ -72,7 +72,7 @@ In Employee decisions, Results from selects a combined inspection containing bot
 
 ## Manual dummy tests
 
-Scenario lab → Dummy rate test accepts federal and state amounts, a date and an optional name. Run & save evaluates the supplied employees with the same deterministic engine and saves a DUMMY_TEST record in a separate table. It does not create operational rules, approvals, flags, jobs or evaluation receipts. Previous approved amounts can be used as a simulated comparison at the same date with the same employee inputs. Salary conversion remains unapproved. Reopen saved dummy tests or export their clearly labelled JSON.
+Scenario lab → Dummy rate test accepts federal and state amounts, a date and an optional name. Run & save evaluates the sample employees with the same deterministic engine and saves a DUMMY_TEST record in a separate table. It does not create operational rules, approvals, flags, jobs or evaluation receipts. Previous approved amounts can be used as a simulated comparison at the same date with the same employee inputs. Salary conversion remains unapproved. Reopen saved dummy tests or export their clearly labelled JSON.
 
 The standalone Evidence ledger screen has been removed. Approval/source details live inside saved inspection results; the underlying audit chain, job records and portable employee receipts remain preserved.
 
