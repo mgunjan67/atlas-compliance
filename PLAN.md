@@ -25,7 +25,7 @@ Objective: deliver a reviewable minimum-wage operating slice for the two fiction
 | Employee outputs and traceability | output/live-results.*; output/reviewer-story/*.json and *.csv |
 | Change-driven employee re-evaluation | atlas/workflow.py; story report and audit export |
 | Reproducibility and historical explanation | before/after/as-known outputs; two verifiable receipts |
-| Tests and failure cases | 118 unit/integration tests; lab report; docs/validation.md |
+| Tests and failure cases | 121 unit/integration tests; lab report; docs/validation.md |
 | Automatic advisory AI | atlas/ai_review.py; atlas/ai_provider.py; docs/ai-review.md; isolated suggestion database |
 | Implementation choice and development disclosure | README.md; docs/disclosure.md |
 

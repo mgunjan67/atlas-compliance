@@ -79,6 +79,8 @@ class WebTests(unittest.TestCase):
                     self.assertFalse(json.load(response)['checking'])
                 with urlopen(base+'/api/ai-review?'+urlencode({'id':daily['id']})) as response:
                     self.assertEqual(json.load(response)['status'],'unavailable')
+                with urlopen(base+'/api/ai-attention') as response:
+                    self.assertEqual(json.load(response)['items'],{})
                 headers={'Content-Type':'application/json','X-Atlas-CSRF':live['csrf']}
                 with urlopen(Request(base+'/api/monitor/stop',data=b'{"mode":"live"}',headers=headers,method='POST')) as response:
                     self.assertFalse(json.load(response)['running'])

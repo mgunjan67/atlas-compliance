@@ -11,7 +11,7 @@ The included websites, currency and employee records are fictional sample data.
 - Internet access to check the source websites
 - Access to this GitHub repository if it is private
 
-Atlas uses the Python standard library. No extra packages or API keys are required.
+Atlas uses the Python standard library. No extra packages are required. Source checks, review and wage calculations work without an API key; optional AI suggestions require a Groq key.
 
 ## Clone the project
 
@@ -93,6 +93,8 @@ The parser and final calculations stay deterministic. A background AI worker add
 Set `GROQ_API_KEY` in the server environment before starting Atlas. On Windows, Atlas also reads the saved user environment variable. Never commit the key. No additional Python packages are needed.
 
 With a key configured, Atlas automatically classifies saved publications using Groq's `openai/gpt-oss-120b`. Open **Inspect** in Rule review to see the parser classification, AI suggestion, supporting text and any disagreement. Existing publications are processed on first startup; unchanged versions reuse saved suggestions.
+
+Publications with differing readings have an **AI differs** badge and appear in the **AI review** filter. Tabs still follow the parser. If the parser is wrong, its adapter must be corrected and the saved source reprocessed; accepting an AI category cannot create or approve a rule.
 
 **AI sandbox** lets you select a fictional notice and request a fresh suggestion. It cannot approve a rule. The ordinary review and calculation workflow remains usable without a key or during an AI outage. Set `ATLAS_AI_DISABLED=1` to disable model requests.
 

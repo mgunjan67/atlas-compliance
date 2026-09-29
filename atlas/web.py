@@ -48,6 +48,8 @@ def serve(db_path,employees_path,port):
                 return self.respond(ai_sandbox.status())
             if path.path=='/api/ai-review':
                 return self.respond(ai_review.status(params.get('id','')))
+            if path.path=='/api/ai-attention':
+                return self.respond(ai_review.attention())
             if path.path in ('/','/app.js','/style.css'):
                 file={'/':'index.html','/app.js':'app.js','/style.css':'style.css'}[path.path]
                 typ={'/':'text/html; charset=utf-8','/app.js':'text/javascript; charset=utf-8','/style.css':'text/css; charset=utf-8'}[path.path]

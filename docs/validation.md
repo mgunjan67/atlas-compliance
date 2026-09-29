@@ -1,6 +1,6 @@
 # Validation record
 
-Updated locally on 29 September 2026. These are observed results, not guarantees of legal correctness or general AI accuracy.
+Updated locally on 30 September 2026. These are observed results, not guarantees of legal correctness or general AI accuracy.
 
 ## Automated verification
 
@@ -8,7 +8,9 @@ The AI additions cover persistent reuse, candidate-version changes, simulation e
 
 The final classifier prompt was also run against 12 fictional notices through Groq: **11 matched**, with conflicting dates still misclassified as a final rate. See the [recorded outputs](ai-evaluation.json). The automatic worker completed all 17 existing live publication suggestions in one attempt each; completion does not establish that every classification is correct. Status requests remained responsive (14–34 ms across three checks). A browser inspection of the pending Asteria future notice showed its saved AI suggestion, supporting-evidence disclosure and unchanged human approval form. No live approvals were performed.
 
-`python -m unittest discover -s tests -q`: **118 tests passed**. The suite covers:
+`python -m unittest discover -s tests -q`: **121 tests passed**. The suite covers:
+
+- Saved AI differences: normalized parser categories, unknown parser output, exclusion of pending/failed/old-prompt results, and read-only failure handling when suggestion storage is locked. Reading the list makes no model calls and leaves the main database unchanged.
 
 - Precedence in both directions, equality, subcent comparisons, exact weekly arithmetic, missing/invalid inputs and unsupported scope.
 - Daily expiry without fallback, future-effective dates, pending review, conflicting versions and explicit supersession.
@@ -41,7 +43,7 @@ The final classifier prompt was also run against 12 fictional notices through Gr
 | Actual engine mutations | 5 / 5 caught | Lower floor, equality failure, future activation, ignored expiry, missing-state fallback |
 | Instruction-like source fixture | Quarantined | Specific triage pattern; not complete injection detection |
 
-The oracle uses an independent arithmetic representation rather than calling the engine's rounding helper. Mutation checks compile intentionally modified copies of this project's own engine in memory; they never execute source-page instructions. The generated tests are bounded and synthetic, not a broad regulatory benchmark or an LLM evaluation dataset. Some of these checks are also exercised by the 103-test suite; their counts should not be added as independent coverage claims.
+The oracle uses an independent arithmetic representation rather than calling the engine's rounding helper. Mutation checks compile intentionally modified copies of this project's own engine in memory; they never execute source-page instructions. The generated tests are bounded and synthetic, not a broad regulatory benchmark or an LLM evaluation dataset. Some of these checks are also exercised by the unit/integration suite; their counts should not be added as independent coverage claims.
 
 ## Supplied-dataset replay
 
@@ -54,6 +56,8 @@ The oracle uses an independent arithmetic representation rather than calling the
 - Original receipt verifies after correction; earlier-knowledge states reproduce the baseline; audit chain is consistent.
 
 ## Browser verification
+
+On 30 September, an isolated server with model calls disabled used a deliberately mismatched saved suggestion: parser News, synthetic AI Final rate. The publication list showed an AI differs badge, the AI review filter selected that record, and Inspect showed both readings and the parser-correction guidance. The news classification stayed unchanged. No review was submitted, no real inference ran, and no browser warnings or errors appeared. This verifies presentation and routing of a disagreement, not model accuracy.
 
 On 28 September, an isolated copy with AST-0001's hourly wage removed showed an employee-data warning, its exact current error, and the unchanged saved wage/receipt in the employee dialog. Selecting the September 25 inspection made both sidebar and employee-page export links target the same saved inspection. The simplified live Overview showed 21 below minimum, 11 meeting minimum and 16 review cases; automatic checks remained off and no browser console errors were observed. The Overview now presents results, source checks and any pending inspection; detailed salary analysis remains in employee records. The old web replay and per-rule history routes were removed; the tested CLI story remains available.
 

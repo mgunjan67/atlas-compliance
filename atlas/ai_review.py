@@ -10,6 +10,10 @@ from pathlib import Path
 from .ai_provider import VERSION,MODEL,AIUnavailable,api_key,suggest
 from .extract import suspicious
 
+PARSER_CATEGORIES = {'DAILY_RATE':'daily_rate','FINAL_NOTICE':'final_rate',
+                     'RATE_CORRECTION':'rate_correction','CORRECTION':'coverage_correction',
+                     'GUIDANCE':'guidance','PROPOSAL':'proposal','NEWS':'unrelated'}
+
 def stamp():return datetime.now(timezone.utc).isoformat()
 
 class AIReview:
@@ -71,6 +75,25 @@ class AIReview:
         with self.connect() as db:
             db.execute('UPDATE suggestions SET status=?,next_at=?,data=? WHERE id=?',(status,next_at,json.dumps(data),row['id']))
         return True
+
+    def attention(self):
+        """Read saved category differences without inference or live-database writes."""
+        unavailable={'available':False,'items':{}}
+        if self.error or not self.path.exists():return unavailable
+        try:
+            # This optional UI read must not wait on the worker's write transaction.
+            with closing(sqlite3.connect(self.path.as_uri()+'?mode=ro',uri=True,timeout=.1)) as db:
+                rows=db.execute("SELECT candidate_id,data FROM suggestions WHERE version=? AND status='done'",(VERSION,)).fetchall()
+            items={}
+            for candidate_id,raw in rows:
+                data=json.loads(raw)
+                parser=PARSER_CATEGORIES.get(data.get('parser_kind'))
+                category=data['result']['category']
+                if parser!=category:
+                    items[candidate_id]={'parser_category':parser,'ai_category':category,
+                                         'label':'AI differs' if parser else 'Parser needs review'}
+            return {'available':True,'items':items}
+        except (sqlite3.Error,OSError,ValueError,KeyError,TypeError):return unavailable
 
     def status(self,candidate_id):
         if self.error:return {'status':'unavailable','error':'AI suggestion storage unavailable; source review is still available.'}

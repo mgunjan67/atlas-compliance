@@ -6,6 +6,12 @@ The parser knows the two websites' supported structures. AI provides a second re
 
 Rule review shows the parser category, the AI category and supporting source text. Disagreements are labelled. A numerical rule still needs the existing human approval; daily federal and state updates still share one inspection. Neither agreement nor disagreement changes the rule's status automatically.
 
+The publication list marks differing categories with **AI differs**. A conditional **AI review** filter collects those publications, including historical ones and notices the parser could not classify. It is a second view of existing records, not a new rule category. The list refreshes with the normal page refresh; the inspection polls while its suggestion is pending.
+
+Read the saved source to decide which interpretation is supported. If the parser is correct, continue the existing evidence-based review and explain the difference in the review note where applicable. If the parser is wrong, do not approve its proposed rule: the adapter needs correction and the source needs reprocessing and review. There is no in-app category override or AI-based field repair. Badges describe the saved readings and remain visible even after a rule review; they are not an unresolved approval count.
+
+The list reads only saved suggestions through a separate read-only endpoint. It does not make model requests or write to the rule database. If suggestion storage is unavailable, the ordinary publication list still loads.
+
 AI sandbox is separate. Choose one of the twelve fictional notices and click **Get AI suggestion**. The expected answer is shown only in the comparison, never sent to the model.
 
 ## Operation

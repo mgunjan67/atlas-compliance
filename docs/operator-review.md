@@ -4,6 +4,8 @@ Publication inspections now include an automatic AI category suggestion beside t
 
 Use the operator interface to inspect captured source evidence and decide whether a proposed rule can be applied. The examples below refer to saved source snapshots; use a fresh check for current rates.
 
+An **AI differs** badge points to a different reading, not a changed rule. Use the **AI review** filter to find these records across publication groups. Check both readings against the saved source. If the parser's proposed rule is wrong, leave it unapproved until its adapter is corrected and the evidence reprocessed. The interface cannot convert an AI category into an approved rule.
+
 ## Numerical rule candidates
 
 | Publisher ID | Jurisdiction | Amount | Effective date | Review focus |

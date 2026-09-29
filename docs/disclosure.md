@@ -2,6 +2,10 @@
 
 This document describes development assistance and distinguishes observed source evidence from simulated test data.
 
+## Time spent
+
+Total time reported by the project author: **18 hours**, including review and testing.
+
 ## AI assistance
 
 OpenAI Codex assisted with project planning, source and dataset research, identifying ambiguities, designing the workflow, implementing Python/SQLite and the local browser UI, writing and running tests, debugging, and preparing documentation and test artifacts.
