@@ -6,7 +6,7 @@ Atlas uses a violet accent palette, light panels and clear typography. The visua
 
 | Website detail | Console adaptation |
 |---|---|
-| Violet-to-magenta announcement bar | Slim gradient ribbon above the workspace |
+| Violet-to-magenta accents | Gradient Atlas lettermark and restrained interface accents |
 | Near-black text on white, with light neutral borders | White navigation, white panels and subtle lavender surfaces |
 | Inter body type; Inter Tight semibold headings | The same font families, bundled locally for offline use |
 | Violet primary calls to action and rounded controls | Violet action buttons, pill labels, rounded inputs and dialogs |
