@@ -19,6 +19,12 @@ Atlas monitors the [Asterian federal page](https://asterian-federal-wage-site.ve
 
 These are dated observations, not claims about today's rates. Use the live check to retrieve current publications. A captured rate is not an approved rule. Peer figures never supply duplicate rules; current cross-source disagreement blocks unsupported decisions.
 
+## Why these sources are trusted
+
+The two designated websites are treated as the primary publishers for their fictional jurisdictions. Asteria supplies the federal rule; Bellwether supplies the state rule. A state figure repeated on the federal page is a cross-check, not a replacement for the state publication.
+
+Atlas restricts fetching to these HTTPS origins and refuses redirects. That keeps retrieval within the configured sources; it does not establish their legal authority. For a real jurisdiction, a compliance owner would first verify the publisher through an official government directory or statutory reference, confirm its authority over the relevant workers, and record that decision before adding the source. Each proposed rule would still need its publication status, scope and effective date checked against the saved evidence.
+
 ## Decisions and assumptions
 
 **Precedence.** Select the latest applicable approved version per jurisdiction, then the higher federal/state amount for Bellwether work. Use work location, not home address. Same-date conflicting approved versions need review. Corrections explicitly identify the version they replace.
@@ -47,8 +53,22 @@ Each employee/date has one current flag per live or simulated workspace. Identic
 
 Every check records success, change or error for both sources. Failed fetches, unsupported page structure, unmapped changes and cross-source inconsistencies prevent unsupported current decisions. Daily-card expiry is the freshness boundary: an old daily amount cannot be carried into a new day's legal calculation. The last-check time is visible; automatic polling is optional and stops when the server stops. Failed re-evaluation jobs remain stored and retryable. A successful current archive does not hide those failures: the UI reports partial completion and offers a retry. No old source or evaluation is erased to make the status look successful.
 
-## Implementation choice and remaining limits
+## Why the current pipeline does not use AI
 
-Atlas uses deterministic extraction and classification for these two structured sources. Ambiguous or unsupported publications require human review. No runtime model integration is included.
+Both pages expose labelled rate cards and publication details in their HTML. For this small set of sources, explicit parsing rules are easy to test: the same content produces the same extracted fields and classification. Detected unfamiliar wording is flagged for review; unsupported layouts fail extraction with the page preserved for investigation. This choice trades broader language coverage for a smaller, verifiable system. No runtime model integration is included.
 
-The project tests one complete correction using the included employee records and clearly simulated approvals. Repeated calculations are deduplicated, while new input transitions retain their observation time. Historical backfill covers only inputs previously recorded. Broader document layouts, employer coverage, salary policy and production identity/history require further work with the domain owner. Authentication and full payroll integration are outside the current project scope.
+AI could help find relevant notices or suggest classifications and extracted fields if the project expanded to less structured sources. Those suggestions would need supporting source passages, validation and human approval before becoming rule data. A model would also need testing against labelled examples, including misleading and ambiguous notices, before its output could be relied on. The current project makes no claim of tested AI extraction.
+
+Rule selection, jurisdiction precedence, effective-date checks, arithmetic and the final compliance state must remain deterministic and testable. A model should neither approve a rule nor decide whether an employee is compliant.
+
+## What would need to change for real payroll
+
+Atlas currently runs locally with fictional data. A typed reviewer name is an audit label, not a verified identity, and a scheduled-hours estimate is not a payroll adjustment. Before using real employee records, the following work would be needed:
+
+- **Verify the policies and inputs.** Have a compliance owner validate source authority, coverage, exemptions, salary treatment and date rules. Connect effective-dated wage and work-location records, actual hours and pay periods, then reconcile results against known payroll cases.
+- **Control access to employee data and approvals.** Add authenticated users, reviewer permissions and employer separation. Limit stored personal data, protect it in transit and at rest, and define retention and deletion rules.
+- **Make monitoring independent of an open local server.** Run checks and retries through a managed service. Alert an owner when a source is overdue, extraction fails, a page layout changes or re-evaluation jobs remain unfinished. Record who investigates and resolves each failure.
+- **Protect and recover history.** Use controlled database access, tested backups and an independently protected audit record. The current local hash chain can expose inconsistencies, but someone with full database access could rewrite both records and hashes.
+- **Validate before connecting payroll actions.** Test concurrent reviews, interrupted jobs and recovery on representative data. Have operators check the results alongside the existing payroll process before allowing any downstream payment changes. Atlas currently calculates and exports findings; it does not change payroll.
+
+The existing tests cover a complete correction with simulated approvals, repeat processing and historical re-evaluation. They do not establish production readiness. Historical backfill remains limited to employee inputs and source versions actually captured.

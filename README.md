@@ -104,6 +104,8 @@ Extraction, classification and final calculations are deterministic. No runtime 
 - Historical reconstruction covers employee inputs and source versions already captured. It cannot reconstruct unobserved changes or missed daily rates.
 - Receipt verification depends on the matching engine/parser versions. Local hashes detect inconsistency but are not independent signatures or external notarization.
 
+The [research memo](docs/research.md) explains how sources are trusted, why the current pipeline uses explicit parsing instead of AI, and what would need to change before processing real payroll data.
+
 ## Run the tests
 
 From the project folder:
