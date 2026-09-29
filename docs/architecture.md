@@ -55,6 +55,6 @@ flowchart TB
   DB1 --> UI
 ```
 
-**Live and test boundaries:** The web console captures the designated pages and leaves new rates pending until a person approves them. Scenario lab saves custom-rate calculation tests separately. The CLI correction story uses an isolated database, explicitly simulated approvals and a synthetic correction to demonstrate the complete change loop. It is not a second browser workspace.
+**Live and test boundaries:** The web console captures the designated pages and leaves new rates pending until a person approves them. Scenario lab saves custom-rate calculation tests separately. The CLI correction story uses an isolated database, explicitly simulated approvals and a synthetic correction to test the complete change loop. It is not a second browser workspace.
 
 **Implementation boundary:** `watch` is an optional foreground 15-minute process; the browser console can start the same interval while its server is open. Both schedules are stopped by default, and the earlier Codex freshness task was stopped at the candidate's request. Each completed watcher cycle archives all 48 results, including pending decisions. SQLite provides the local version, job and audit stores; there is no production identity system or full payroll integration. The wage calculation and final state always come from `atlas.engine`, not an LLM.

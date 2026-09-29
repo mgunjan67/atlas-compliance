@@ -4,7 +4,7 @@ This document describes development assistance and distinguishes observed source
 
 ## AI assistance
 
-OpenAI Codex assisted with reading the take-home brief, source and dataset research, identifying ambiguities, designing the workflow, implementing Python/SQLite and the local browser UI, writing and running tests, debugging, and preparing documentation and demonstration materials.
+OpenAI Codex assisted with reading the take-home brief, source and dataset research, identifying ambiguities, designing the workflow, implementing Python/SQLite and the local browser UI, writing and running tests, debugging, and preparing documentation and test artifacts.
 
 The submitted workflow uses deterministic extraction and classification for these two structured sources. Ambiguous or unsupported publications require human review. AI is optional in the assignment; no runtime model integration is included.
 
@@ -25,4 +25,4 @@ The assistant has not represented itself as a human reviewer or approved live so
 
 - Understand the source assumptions, implementation and validation limits.
 - Make live review decisions using the preserved evidence and a justified reason.
-- Clearly label simulated changes and approvals when demonstrating the system.
+- Clearly label simulated changes and approvals in test artifacts.

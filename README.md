@@ -114,7 +114,7 @@ python -m unittest discover -s tests -q
 
 Use `python3` on macOS or Linux if required.
 
-For a repeatable change demonstration without waiting for a website update:
+To test a complete change workflow without waiting for a website update:
 
 ```bash
 python -m atlas story
@@ -133,7 +133,6 @@ The story uses saved source pages and the included employees in an isolated simu
 | [Employee data analysis](docs/employee-data-analysis.md) | Dataset findings and salary/data exceptions |
 | [Operator guide](docs/operator-review.md) | Evidence inspection, review decisions and result history |
 | [Validation report](docs/validation.md) | Automated checks, observed results and testing limits |
-| [Walkthrough guide](docs/walkthrough.md) | A 5–10 minute live demonstration sequence, also usable for a recording |
 | [Development disclosure](docs/disclosure.md) | Development assistance and simulation provenance |
 | [Requirement map](PLAN.md) | Requirements mapped to implementation evidence |
 

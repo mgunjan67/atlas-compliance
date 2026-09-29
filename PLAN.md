@@ -27,8 +27,7 @@ Objective: deliver a reviewable minimum-wage operating slice for the two fiction
 | Reproducibility and historical explanation | before/after/as-known outputs; two verifiable receipts |
 | Tests and failure cases | 103 unit/integration tests; lab report; docs/validation.md |
 | Implementation choice and development disclosure | README.md; docs/disclosure.md |
-| Five-to-ten-minute walkthrough | docs/walkthrough.md; candidate records or presents |
 
-## Demonstration preparation
+## Verification
 
-Rehearse the live review path and the isolated CLI correction story, inspect source evidence, and understand the salary, coverage and date assumptions. The walkthrough guide supports a 5–10 minute live demonstration or recording. Clearly distinguish saved simulations from live source checks and human approvals.
+Inspect the live review path and the isolated CLI correction test, check source evidence, and verify the salary, coverage and date assumptions. Saved simulations remain distinct from live source checks and human approvals.

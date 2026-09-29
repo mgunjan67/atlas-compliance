@@ -32,4 +32,4 @@ The brief asks for a trustworthy operating slice. The strongest evidence is a sm
 
 With another development day, the first priorities would be broader independently labelled publication cases and domain-owner agreement on salary/coverage policy. A broader autonomous agent would not solve the missing salary and coverage authority.
 
-Read [research](research.md) for the source evidence, [README](../README.md) to run it, and [walkthrough](walkthrough.md) for the demonstration sequence.
+Read [research](research.md) for source evidence, [README](../README.md) for setup, and [validation](validation.md) for verification results.
