@@ -1,6 +1,6 @@
-# Development and submission disclosure
+# Development disclosure
 
-Candidate: verify this disclosure, describe any additional work in your own words, and retain it with the submission.
+This document describes development assistance and distinguishes observed source evidence from simulated test data.
 
 ## AI assistance
 
@@ -8,7 +8,7 @@ OpenAI Codex assisted with reading the take-home brief, source and dataset resea
 
 The submitted workflow uses deterministic extraction and classification for these two structured sources. Ambiguous or unsupported publications require human review. AI is optional in the assignment; no runtime model integration is included.
 
-The assistant has not represented itself as a human reviewer or approved live source-backed rules. The candidate must understand and be able to defend the implementation and assumptions.
+The assistant has not represented itself as a human reviewer or approved live source-backed rules. Live review remains an operator responsibility.
 
 ## Evidence and simulations
 
@@ -21,16 +21,8 @@ The assistant has not represented itself as a human reviewer or approved live so
 - Optional salary annualization and one-day daily-card validity are declared policies, not facts invented from the sources.
 - Test fixtures and deliberate engine mutations are synthetic. Passing them is not an end-to-end model benchmark.
 
-## Time
+## Operator responsibilities
 
-The candidate confirmed approximately **18 hours** on 28 September 2026, including reading, implementation review and testing with Codex. This is candidate-reported personal time, not a machine-measured duration. The recording is still pending; update the total if recording or further preparation changes it.
-
-## Submission actions still owned by the candidate
-
-- Read and understand the source assumptions, implementation and validation limits.
-- Personalize the explanation and update the 18-hour estimate if further work changes it.
-- Make any live operator review decisions personally, with source evidence and reasons.
-- Record a 5–10 minute walkthrough or present the live demo.
-- Publish/share the intended repository and provide its link through the employer's requested channel.
-
-No external repository, recording, email or interview submission was published by this workflow. The provided ZIP is a local handoff artifact.
+- Understand the source assumptions, implementation and validation limits.
+- Make live review decisions using the preserved evidence and a justified reason.
+- Clearly label simulated changes and approvals when demonstrating the system.

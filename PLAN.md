@@ -1,6 +1,6 @@
 # Assessment plan and completion map
 
-Objective: deliver a reviewable minimum-wage operating slice for the two assigned fictional authorities and supplied dataset. The original 14-hour plan was an estimate; actual candidate time must be recorded separately.
+Objective: deliver a reviewable minimum-wage operating slice for the two fictional authorities and included employee dataset.
 
 ## Work completed
 
@@ -29,6 +29,6 @@ Objective: deliver a reviewable minimum-wage operating slice for the two assigne
 | Implementation choice and development disclosure | README.md; docs/disclosure.md |
 | Five-to-ten-minute walkthrough | docs/walkthrough.md; candidate records or presents |
 
-## Final human handoff
+## Demonstration preparation
 
-The candidate should rehearse the live review path and the isolated CLI correction story, inspect source evidence, understand the salary/coverage/time assumptions, and record the demonstration. The candidate confirmed approximately 18 hours of personal time on 28 September 2026. Publication and delivery to the employer remain candidate actions. The recording remains outstanding.
+Rehearse the live review path and the isolated CLI correction story, inspect source evidence, and understand the salary, coverage and date assumptions. The walkthrough guide supports a 5–10 minute live demonstration or recording. Clearly distinguish saved simulations from live source checks and human approvals.

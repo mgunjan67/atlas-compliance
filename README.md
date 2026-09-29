@@ -65,6 +65,45 @@ For Bellwether employees, Atlas applies the higher applicable approved federal o
 
 Atlas creates its SQLite database at `data/atlas-v2.sqlite3`. Checks and exports are saved under `output/`, including dated archives in `output/live-archive/`. Restarting the server keeps the local data. Local databases and personal review history are not included when cloning the repository.
 
+## Architecture and data flow
+
+Atlas is a local Python application with a browser interface and a SQLite database. The calculation engine is separate from fetching and review, so its decisions can be tested and reproduced without accessing the websites.
+
+| Component | Responsibility |
+|---|---|
+| Source monitor and extractor | Fetch both websites, preserve HTML and retrieval history, compare changes, classify publications and extract proposed rules |
+| Review and rule registry | Store evidence, effective dates and immutable review decisions; approve daily federal/state updates together |
+| Evaluation engine | Read the employee CSV, select applicable approved rules and calculate decisions with decimal arithmetic |
+| Workflow and evidence storage | Re-evaluate affected employees, preserve earlier results, retry failed jobs and produce JSON/CSV exports and decision receipts |
+| Browser dashboard and CLI | Check sources, inspect evidence, review updates, explore employee results and run separate simulations |
+
+The operating sequence is:
+
+1. Fetch both sources and save their content, timestamps and checksums.
+2. Compare each retrieval with the previous one. Classify rate notices, future rules, interpretations, proposals and unrelated information.
+3. Record new candidates as `REVIEW_REQUIRED`, with their discovery timestamps. A person inspects the evidence and approves or rejects numerical rules; supporting interpretations may be acknowledged separately.
+4. Store approved versions with their effective dates. New approvals and effective dates trigger re-evaluation work.
+5. Select the applicable approved federal/state rules for each employee's work location and evaluation date. Return `COMPLIANT`, `NON_COMPLIANT`, `INSUFFICIENT_DATA` or `REVIEW_REQUIRED`.
+6. Save results, review history and source evidence. Previous approved results remain visible with their original date while new changes await review.
+
+Extraction, classification and final calculations are deterministic. No runtime AI service is required. See the [architecture document](docs/architecture.md) for diagrams and implementation details.
+
+## Assumptions
+
+- **Jurisdiction:** use the employee's work location. Bellwether workers receive the higher applicable approved federal/state minimum.
+- **Dates:** a rule must be approved and effective before it controls a result. Daily rate cards have one-day validity as an explicit conservative policy; yesterday's amount is not assumed to apply today.
+- **Pay and coverage:** annual salary is not treated as an actual hourly wage without an approved conversion method. Optional salary estimates are for investigation only. The coverage correction requires an explicit decision because employer headcount is absent from the employee file.
+- **Money:** compare exact decimal amounts before rounding; equality meets the minimum. Report monetary amounts to two decimals using half-up rounding. Hourly shortfall is `max(0, floor − wage)`; the weekly estimate multiplies it by scheduled weekly hours when available.
+- **Uncertainty:** missing required inputs or rules, conflicting information and unresolved relevant source changes cannot silently produce a compliant result. Each unresolved result explains its reason and next action.
+
+## Known limitations
+
+- The source adapters support the two specified websites. Unfamiliar layouts or ambiguous language require investigation; this is not a general-purpose regulatory parser.
+- The server is intended for local, single-operator use. It has no production user authentication or reviewer identity verification.
+- Scheduled hours support an estimated weekly gap, not a final payroll liability. Salary-conversion and employer-coverage questions need additional authority or information.
+- Historical reconstruction covers employee inputs and source versions already captured. It cannot reconstruct unobserved changes or missed daily rates.
+- Receipt verification depends on the matching engine/parser versions. Local hashes detect inconsistency but are not independent signatures or external notarization.
+
 ## Run the tests
 
 From the project folder:
@@ -74,3 +113,28 @@ python -m unittest discover -s tests -q
 ```
 
 Use `python3` on macOS or Linux if required.
+
+For a repeatable change demonstration without waiting for a website update:
+
+```bash
+python -m atlas story
+python -m atlas verify output/reviewer-story/original-receipt.json
+```
+
+The story uses saved source pages and the included employees in an isolated simulation database. It injects a Bellwether correction, records a simulated review, re-evaluates employees and verifies the original receipt. It writes to `output/reviewer-story/` and does not approve live sources.
+
+## Documentation and example outputs
+
+| Document | Contents |
+|---|---|
+| [Project brief](docs/reviewer-brief.md) | Summary, key decisions and tradeoffs |
+| [Architecture](docs/architecture.md) | Components, data flow and storage boundaries |
+| [Research memo](docs/research.md) | Interpretation of both sources, precedence, effective dates and edge cases |
+| [Employee data analysis](docs/employee-data-analysis.md) | Dataset findings and salary/data exceptions |
+| [Operator guide](docs/operator-review.md) | Evidence inspection, review decisions and result history |
+| [Validation report](docs/validation.md) | Automated checks, observed results and testing limits |
+| [Walkthrough guide](docs/walkthrough.md) | A 5–10 minute live demonstration sequence, also usable for a recording |
+| [Development disclosure](docs/disclosure.md) | Development assistance and simulation provenance |
+| [Requirement map](PLAN.md) | Requirements mapped to implementation evidence |
+
+The repository includes the [employee CSV](data/employees.csv), [captured source pages](data/research/), [a preserved pre-review live check](output/live-archive/2026-09-25/), and [simulated before/after results, audit events and receipts](output/reviewer-story/). Simulated outputs are labelled; they are not evidence of live approvals. The [scenario report](output/lab-report.json) records the automated lab checks.

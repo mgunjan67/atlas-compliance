@@ -1,6 +1,6 @@
 # Seven-minute reviewer walkthrough
 
-This is a recording guide; no recording is included. Use the live workspace and Scenario lab. Dummy tests demonstrate calculations, not live fetching or human approval.
+This guide supports a 5–10 minute live demonstration or recording. Use the live workspace and Scenario lab. Dummy tests demonstrate calculations, not live fetching or human approval.
 
 ## 0:00–1:00 — Explain the task and current results
 
@@ -28,8 +28,8 @@ Expand Automated checks: 16 curated scenarios, independent arithmetic checks and
 
 ## 6:30–7:00 — Explain limits and tradeoffs
 
-Extraction and classification are deterministic for the two structured assessment sources. Unknown or ambiguous material needs human review. AI is optional in the assignment; no untested runtime model integration is included. Mention the local single-operator scope, salary-policy uncertainty, actual preparation time and development assistance.
+Extraction and classification are deterministic for the two structured sources. Unknown or ambiguous material needs human review. No runtime model integration is included. Explain the local single-operator scope, salary-policy uncertainty and development assistance.
 
-## Before recording
+## Before presenting or recording
 
 Run the tests and story, inspect the artifacts you plan to show, and use your own words. Do not claim a dummy run checks websites or approves published rules. Verify any real source before approving it yourself.
