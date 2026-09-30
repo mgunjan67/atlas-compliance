@@ -53,7 +53,7 @@ Each result includes its decision, applicable rules, controlling version, source
 
 New approvals or effective dates trigger evaluation work for affected employees. Historical calculations use previously captured employee inputs. Jobs can be retried after a failure; repeated results reuse their identities while audit events preserve observation history.
 
-Pending changes do not erase the last complete source-cleared results. The interface labels the saved date and current uncertainty. Exports and portable receipts retain the source and calculation evidence for each decision.
+While a change awaits review, the interface retains the last complete results whose source reviews were resolved. It labels their saved date and the current problem. Exports and portable receipts preserve the source and calculation evidence for each decision.
 
 ## Runtime and test boundaries
 

@@ -1,6 +1,6 @@
 # Atlas research memo
 
-Evidence: captured September 24–25, 2026; implementation reviewed September 28. All authorities and employees are fictional sample data. Source facts, implementation policies and unresolved inputs are distinguished below.
+Source pages captured September 24–25, 2026; documentation reviewed September 30. All authorities and employees are fictional. This memo separates source findings from Atlas policies and unresolved inputs.
 
 ## Source findings
 
@@ -31,7 +31,7 @@ Atlas restricts fetching to these HTTPS origins and refuses redirects. That keep
 
 **Time.** Keep publication, effective, discovery and review timestamps separate. Cards do not separately state their original publication date: it remains null. Daily cards use `[effective date, next day)` as a conservative freshness policy, not a legal sunset inferred from the source. A missed day cannot be reconstructed from today's rate. Future final notices remain inactive before their effective date.
 
-**Discovery.** Compare visible page text as well as supported publication structures. Unfamiliar wage blocks become review candidates; other changed unmapped content fails extraction for investigation with the failed page preserved. Cosmetic HTML changes alone do not create rules. Contradictory labels, negated proposals, restricted coverage and changed guidance must not silently pass. The adapter is deliberately bounded and may abstain unnecessarily when pages change.
+**Discovery.** Compare visible page text as well as supported publication structures. Unfamiliar wage blocks become review candidates; other unrecognized changes stop extraction for investigation, with the page preserved. Cosmetic HTML changes alone do not create rules. Contradictory labels, negated proposals, restricted coverage and changed guidance need review. The parser supports the two known layouts and may request review for harmless changes it cannot interpret.
 
 The amount parser validates the entire numeric token; unsupported precision is not truncated or rounded into a proposed rate. Numerical notices must use supported general-rate wording. Additional scope conditions or unfamiliar sentences remain unresolved rather than becoming general rules. A publication returning after a different version or absence is a new occurrence requiring review where relevant; unchanged repeat checks reuse the existing occurrence. Parser versions are retained so old receipts still reproduce the original extraction.
 
@@ -49,7 +49,7 @@ No source authorizes converting annual pay into an actual hourly compliance wage
 
 A federal change selects Asteria employees, including those working in Bellwether. A state change selects employees working in Bellwether. Date bounds determine which current or previously observed work dates are affected. Historical re-evaluation uses the stored employee inputs for those dates, not today's wages or location. An unchanged higher state floor may mean a federal change produces no different decision for a Bellwether employee.
 
-Each employee/date has one current flag per live or simulated workspace. Identical calculations reuse an evaluation identity; transitions update that flag and append an observation, preserving previous evaluations and audit events. Returning to an earlier input therefore records a new observation without inventing another active flag. Saved inspections and their resolved versions remain immutable. Pending updates preserve the last complete source-cleared display, with the saved date and current uncertainty shown separately.
+Each employee/date has one current flag per live or simulated workspace. Identical calculations reuse an evaluation identity; transitions update that flag and append an observation, preserving previous evaluations and audit events. Returning to an earlier input records another observation without creating a duplicate active flag. Saved inspections and their resolved versions remain immutable. While an update awaits review, the screen retains the last complete results with resolved source review. It shows their saved date and the current problem separately.
 
 Every check records success, change or error for both sources. Failed fetches, unsupported page structure, unmapped changes and cross-source inconsistencies prevent unsupported current decisions. Daily-card expiry is the freshness boundary: an old daily amount cannot be carried into a new day's legal calculation. The last-check time is visible; automatic polling is optional and stops when the server stops. Failed re-evaluation jobs remain stored and retryable. A successful current archive does not hide those failures: the UI reports partial completion and offers a retry. No old source or evaluation is erased to make the status look successful.
 
@@ -59,7 +59,7 @@ Both pages expose labelled rate cards and publication details in their HTML. Exp
 
 AI supplies an independent category suggestion from saved publication text. It helps reviewers interpret unfamiliar wording, but it does not repair the parser, extract approved amounts or clear warnings. A separate background worker saves suggestions and their evidence references. The inspection view shows disagreement without changing the existing human approval process.
 
-The initial hosted extraction screen classified 17 of 17 familiar/development examples correctly, but only 12 passed both field and exact-quotation checks. A later 12-case classification experiment matched 10 categories and supplied useful suggestions on five unfamiliar examples. It mishandled conflicting dates and a withdrawn order; the parser safely requested review for both. These small selected tests justify an advisory role, not autonomous decisions. They are separate runs with different prompts; see [AI review](ai-review.md).
+The current classifier matched 11 of 12 fictional cases in one recorded run. It misclassified a notice with conflicting dates, which the parser sent to review. Earlier experiments used different prompts: an extraction test matched 17 categories but passed only 12 field-and-quotation checks; an earlier classification test matched 10 of 12 categories. These small, selected tests support using AI as advice for a reviewer. They do not establish general accuracy. The individual runs are documented in [AI review](ai-review.md).
 
 Rule selection, jurisdiction precedence, effective-date checks, arithmetic and the final compliance state must remain deterministic and testable. A model should neither approve a rule nor decide whether an employee is compliant.
 

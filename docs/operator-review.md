@@ -1,85 +1,83 @@
 # Atlas operator guide
 
-Publication inspections now include an automatic AI category suggestion beside the parser's classification. Check the supporting evidence and any disagreement before making the existing review decision. A queued or unavailable AI result does not prevent manual source review. Suggestions cannot change a rule's status or approve a federal/state update. Use **AI sandbox** to try the supplied fictional notices without affecting live work.
+Use Atlas to check both wage sources, inspect proposed changes and review employee results. Live evaluations use today's UTC date. The examples below come from saved September 2026 pages; check the websites for current rates.
 
-Use the operator interface to inspect captured source evidence and decide whether a proposed rule can be applied. The examples below refer to saved source snapshots; use a fresh check for current rates.
+## Check the sources
 
-An **AI differs** badge points to a different reading, not a changed rule. Use the **AI review** filter to find these records across publication groups. Check both readings against the saved source. If the parser's proposed rule is wrong, leave it unapproved until its adapter is corrected and the evidence reprocessed. The interface cannot convert an AI category into an approved rule.
+The top bar is available on every tab. **Check sites** retrieves both websites. **Start 15-min checks** enables polling while the server runs; **Stop 15-min checks** turns it off. Open **Rates & details** to see rates, retrieval times, saved evidence and errors. These controls check live websites even while Scenario lab or AI sandbox is open.
 
-## Numerical rule candidates
+Overview shows result counts, outcomes by work location and the four largest confirmed hourly wage gaps. **View review cases** opens employees with unresolved decisions.
+
+## Review a daily update
+
+1. Open **Rule review** and inspect the pending federal/state update.
+2. Compare both rates with both saved sources, including the unchanged rate when only one amount has changed.
+3. Check the effective date and employee-impact preview. Expand the evidence section for the full comparison and CSV.
+4. Enter your name, tick the source-verification box, and approve or reject the update. Rejection requires a reason; an approval note is optional.
+
+One decision records the pair. Atlas preserves the earlier approval of an unchanged rate and commits new approvals together with the work needed to re-evaluate employees. A failed source check or a newer source version prevents approval of an outdated inspection. Repeated unchanged checks reuse the same inspection.
+
+The preview compares rates. Salary, coverage and employee-data questions may still keep individual results in review after approval. Future final notices and non-daily corrections have their own review and effective-date checks.
+
+## Inspect publications and AI suggestions
+
+The **Publication register** groups ongoing rates, future rates, interpretations, other information and history. Each record shows its wage effect, status and an **Inspect** link.
+
+Inside an inspection, the automatic AI suggestion appears beside the parser's classification. An **AI differs** badge and the **AI review** filter help you find differing readings. Compare both with the saved evidence. If the parser is wrong, leave its proposed rule unapproved until the adapter is corrected and the source reprocessed. The interface has no AI category override.
+
+A queued or unavailable suggestion does not prevent manual review. **AI sandbox** provides fictional notices for testing suggestions separately.
+
+## Saved source examples
 
 | Publisher ID | Jurisdiction | Amount | Effective date | Review focus |
 |---|---|---|---|---|
-| AFWA-MW-2026.1 | Asteria | 12.73 AST/hour | 2026-09-24 | Current card; covered nonexempt employees; publication date unavailable; one-day interval assumption |
-| BDL-MW-2026.1 | Bellwether | 16.63 AST/hour | 2026-09-24 | Current state card; physical work location; one-day interval assumption |
-| AFWA-2026-0042 | Asteria | 13.25 AST/hour | 2027-01-01 | Final notice published 2026-08-05; must remain inactive before January |
-| BDL-2026-0117 | Bellwether | 17.50 AST/hour | 2027-01-01 | Final state order published 2026-08-05; future-effective |
+| AFWA-MW-2026.1 | Asteria | 12.73 AST/hour | 2026-09-24 | Covered nonexempt employees; publication date unavailable; one-day validity assumption |
+| BDL-MW-2026.1 | Bellwether | 16.63 AST/hour | 2026-09-24 | State rate; physical work location; one-day validity assumption |
+| AFWA-2026-0042 | Asteria | 13.25 AST/hour | 2027-01-01 | Final notice published 2026-08-05; inactive before January |
+| BDL-2026-0117 | Bellwether | 17.50 AST/hour | 2027-01-01 | Final state order published 2026-08-05; inactive before January |
 
-These are proposals in Atlas until you compare them with the preserved source excerpts and record your decision. Rates may have changed since the research snapshot: fetch current sources for a current-date decision.
+These captured amounts require review before becoming approved rules in a new workspace.
 
-## Non-rate items
+## Coverage and supporting information
 
-- AFWA-2026-0038: coverage threshold changed from 24 to 25 employees. No employer headcount/full coverage table exists in the included dataset. Acknowledge only if you accept the explicit coverage assumption that the supplied Covered field has already resolved this issue. Otherwise leave it unresolved. This is a substantive review, not a routine dismiss action.
-- AFWA-2026-0031: proposed federal contract-work rule, not effective law. Reject as an active minimum-wage rule, or acknowledge it as a nonbinding proposal.
-- BDL-2026-0121: unchanged evidence supports the implemented higher-applicable-rate policy; no extra acknowledgment is needed.
-- BDL-2026-0108: unchanged evidence supports physical work-location applicability, including qualifying remote work; no extra acknowledgment is needed.
-- BDL-2026-0099: acknowledge/reject as an irrelevant portal announcement.
+- **AFWA-2026-0038:** the employer-size threshold changed from 24 to 25. The employee file has no employer headcount. Acknowledge this correction only if you accept that the supplied `Covered` field already reflects a valid coverage determination. Otherwise leave it unresolved.
+- **AFWA-2026-0031:** a proposed contract-work rule. It may be acknowledged as a proposal or rejected as an active wage rule.
+- **BDL-2026-0121 and BDL-2026-0108:** unchanged notices supporting the implemented higher-floor and work-location policies. They need no extra acknowledgment. Revised text is reviewed again.
+- **BDL-2026-0099:** a claims-portal announcement with no minimum-wage effect.
 
-In the console, enter your own name, inspect the saved source and tick the verification box. Atlas records a source-specific reason; you can add a note, and rejection requires an explanation. The CLI still requires a written reason. Do not use a generated reviewer identity or describe an AI action as a human approval.
+In the September 25 example, approving the 12.91 and 16.63 daily rates still leaves 32 hourly decisions blocked by the coverage correction. A deliberate coverage acknowledgment clears that source question. Twelve salary-conversion cases and four future-start conflicts remain separate employee exceptions. Unknown or quarantined content cannot be cleared by a generic acknowledgment.
 
-For the September 25 live dataset, approving the 12.91 and 16.63 daily rates is not the end of review. `AFWA-2026-0038` corrects an employer-size coverage threshold and still blocks 32 hourly decisions. The console links directly to that blocker and explains the missing employer headcount. An operator may acknowledge the correction only if they deliberately accept the supplied `Covered` field as an upstream coverage determination for these sample records. Otherwise the source review remains open. Twelve salary-conversion cases and four future-start inconsistencies are separate employee-level exceptions. Live review reasons must be at least 25 characters; this guards against placeholders but cannot verify factual quality.
+Atlas records your name, checked evidence and decision. Browser reviews generate a source-specific reason; you can add your own note. Live CLI reviews require a written reason of at least 25 characters. A reviewer name is an audit label, not a verified identity.
 
-## Review workflow
+## Corrections and failed re-evaluation
 
-The console starts on today's UTC date. Overview shows result counts, outcomes by work location and the four largest confirmed hourly wage gaps. **View review cases** opens unresolved employees. Open **Rule review** for pending inspections and the visible **Publication register**; filter future rates, interpretations, other information or history. Each record shows its effect, status and an evidence link. **Scenario lab** tests custom rates separately from live results. The complete simulated correction test is available through `python -m atlas story`; there is no separate Replay workspace in the browser.
+For a non-daily numerical correction, select the exact approved version it replaces. A same-date daily correction is handled by the combined inspection. Previous versions and results remain available.
 
-For daily updates, inspect the federal and state rates together against both saved sources, even when only one amount changed. The compact dialog shows previous/new amounts, the effective date and a worker-impact count. One approval records the pair. Expand **Evidence and affected employees** for the combined comparison and CSV. This preview is hypothetical; salary, coverage and other unresolved cases still need their own resolution. Future final notices and numerical corrections are reviewed separately against their own effective dates and evidence.
+If re-evaluation fails, check details show the failed work and offer **Retry check**. Successful saved results remain available. The CLI executes queued work through `process-jobs` or the monitor. Future jobs wait until their effective date.
 
-For a same-date non-daily correction, verify and select the exact approved version it supersedes. Approval and its job are committed atomically. If re-evaluation fails, the website-check panel reports the failed work and offers **Retry check**; successful saved results remain available. The command-line workflow uses `process-jobs` or the monitor to execute queued work. Future jobs wait for their effective date.
+## View current and earlier results
 
-Use Employee decisions → Results from to inspect saved results and expand Approval & source details for their provenance. An old-date check uses stored employee inputs and does not establish a full historical payroll ledger. Keep exported receipts and a digest separately if another operator will verify them.
+In **Employee decisions**, use **Results from** to select a saved inspection containing both rates and the employee results. Expand **Approval & source details** for its provenance. Saved evaluation IDs and receipts are retained. Select **Latest results** to return. Earlier records from separate approvals are labelled as earlier approved result sets.
 
-While a new update is pending, the main screen keeps the latest complete source-cleared result set with its original date and a warning about the current problem. This also works when the approval was created before the browser was opened. It does not extend an expired rule or establish current compliance. A changed employee population cannot inherit an unrelated saved result set.
+While a source update or error is unresolved, the screen keeps the last complete result set whose source reviews were resolved. Its original date and the current problem are shown. Current evaluations and check archives still record the unresolved status. The saved view does not extend an expired daily rule or establish compliance for a new date. A different employee population cannot inherit an unrelated result set.
 
-## Employee data and policy requirements
+Historical re-evaluation uses employee inputs captured for that date. Keep exported receipts and their checksums separately if another operator will verify them.
 
-The default output keeps the 16 annual-salary rows in REVIEW_REQUIRED. Four of those also have Active status with future December start dates. Decide whether to keep that conservative scope or request clarification on the expected salary conversion and status handling. The optional annualization scenario must remain labelled as an assumption.
+## Employee policy questions
 
-## Questions for the data owner
+All 16 annual-salary records remain `REVIEW_REQUIRED` until there is an approved hourly comparison method and sufficient pay-period and actual-hours evidence. Four also have Active status with December start dates after the example evaluation date. Any salary-to-hourly illustration is labelled as an assumption.
 
-1. Should annual salary be converted using 52 times scheduled weekly hours, or should salary records require review without actual-hour/pay-period rules?
-2. Should the supplied Covered field be treated as authoritative even though the source includes an employer-size coverage correction and employer headcount is absent?
-3. Should daily current-card rates be treated as valid only on the labelled date or until explicitly superseded?
-4. Are Active records with future start dates intentional test cases, and should those return REVIEW_REQUIRED?
+The data or compliance owner needs to confirm:
 
-The prototype already handles these conservatively; answers can refine the policy without blocking basic development.
+1. The authorized method for comparing annual salary with an hourly minimum.
+2. Whether the supplied `Covered` field resolves employer-size coverage despite the missing headcount.
+3. Whether daily-card rates should remain valid beyond their labelled date. Atlas currently uses one-day validity as a conservative policy.
+4. The correct start dates and employment status for the four future-start records.
 
-New or changed interpretation blocks relevant hourly decisions until resolved. The two unchanged Bellwether notices supporting the implemented higher-floor and work-location policies are informational and need no additional acknowledgment. Exact evidence matching prevents revised notices from inheriting that treatment. Unknown publication formats cannot be cleared by generic acknowledgment.
+## Run a dummy test
 
-## Review-screen constraint
+In **Scenario lab**, enter federal and state rates, a test date and an optional name. Click **Run & save dummy test** to evaluate the sample employees and save a separate `DUMMY_TEST` record. Reopen saved tests or export their labelled JSON.
 
-Keep the primary dialog compact: previous/new rate, jurisdiction/effective date, one hourly-worker impact count, source links and review controls. Optional notes start collapsed. Put detailed comparisons, salary-reference statistics, explanatory paragraphs and full evidence under the single additional-details disclosure. Do not expand this primary screen again when adding supporting evidence. Layout changes must not change approval or evaluation behavior.
+Dummy tests use the deterministic engine and keep salary conversion unresolved. They do not create live rules, approvals, flags, jobs or evaluation receipts. Saved historical results remain in Employee decisions.
 
-The live browser view follows today's UTC date automatically. Use Employee decisions → Results from for saved historical inspections and Scenario lab for hypothetical rates and test dates. The date-aware evaluation engine and CLI remain available. A single sticky top bar provides Check sites, Start/Stop 15-min checks, and Rates & details on every tab. These controls always operate on live websites, including when Scenario lab is open. Rates, saved evidence and expandable check details live in that shared dropdown instead of repeated page panels. Errors appear in the bar status with details in the dropdown. The redundant workspace header and source-clear banner are omitted; pending inspections and retained-result warnings remain beside their relevant results.
-
-## Preserve results while updates await review
-
-Live Overview, Employee decisions and their JSON export keep the last complete source-cleared result set visible, with its original date and receipt IDs. New pending sources and source errors do not replace this saved view with zero totals. The current evaluation and poll archive still record unresolved current status; old daily rates are never extended into today. When current source issues are resolved, the new complete result set replaces the saved view. Salary and employee-data exceptions remain visible. Replay and explicit historical queries keep their original behavior.
-
-## Combined inspection and saved results
-
-The live console groups the captured federal and state daily rates into one inspection. Inspect both saved sources, enter your name once, and approve or reject the update once. If only one rate changes, the unchanged approved counterpart remains part of the recorded inspection; its earlier rule approval is preserved rather than rewritten. Both new approvals and their jobs commit atomically. Same-date numerical corrections supersede their preceding approved versions. Older unapproved daily proposals replaced by the inspected pair are rejected with the combined review reason.
-
-A failed source check or a changed source version prevents approval of a stale pair. Repeated unchanged checks reuse the existing inspection. Future notices and non-rate interpretation/coverage items retain their own effective-date and review handling; the daily approval does not silently approve unrelated publications.
-
-In Employee decisions, Results from selects a combined inspection containing both rates and the whole employee dataset. Results are frozen with original evaluation IDs and receipts. Select Latest results to return. Earlier separately approved history is preserved as explicitly labelled earlier approved result sets, not invented joint approvals.
-
-## Manual dummy tests
-
-Scenario lab → Dummy rate test accepts federal and state amounts, a date and an optional name. Run & save evaluates the sample employees with the same deterministic engine and saves a DUMMY_TEST record in a separate table. It does not create operational rules, approvals, flags, jobs or evaluation receipts. Previous approved amounts can be used as a simulated comparison at the same date with the same employee inputs. Salary conversion remains unapproved. Reopen saved dummy tests or export their clearly labelled JSON.
-
-The standalone Evidence ledger screen has been removed. Approval/source details live inside saved inspection results; the underlying audit chain, job records and portable employee receipts remain preserved.
-
-## One testing destination
-
-Scenario lab has one rate-test form. Enter hypothetical federal and state rates manually. The test date remains explicit. Runs are saved separately as dummy tests. The separate website-replay option is removed from the UI. Automated checks start collapsed. Saved historical employee results remain in Employee decisions.
+For a complete simulated source-change workflow, run `python -m atlas story`. It uses saved pages, a separate database and explicitly simulated approvals. Audit events, jobs and portable receipts remain available without a separate Evidence ledger screen.

@@ -2,7 +2,7 @@
 
 **Product question:** When a wage authority corrects yesterday's rule, can an operator see the affected employees, make a justified decision, and still explain the original result?
 
-Atlas implements that complete loop for the two fictional authorities and the included 48 employees. It treats approval, uncertainty and historical evidence as product behavior that a reviewer can inspect.
+Atlas follows that workflow for two fictional authorities and the included 48 employees. Operators can inspect the evidence, review changes and see how each decision was reached.
 
 ## Three things to try
 
@@ -14,10 +14,10 @@ Atlas implements that complete loop for the two fictional authorities and the in
 
 | Observation | Product decision | Cost accepted |
 |---|---|---|
-| 16 employees have annual salary; no source conversion rule | Preserve review states; optional estimate is explicit | Lower automatic coverage instead of invented certainty |
+| 16 employees have annual salary; no source conversion rule | Keep them in review; label any estimate | These cases need a confirmed salary policy |
 | A federal correction changes a coverage threshold without changing wages | Route to review; document reliance on upstream Covered field | Operator effort even when amount is unchanged |
-| Publication, effective, discovery and approval times differ | Store each separately; query rule knowledge at a timestamp | More temporal state than a simple current-rate table |
-| A review can succeed while downstream work crashes | Atomically queue a durable re-evaluation job; retry idempotently | A small queue and explicit job lifecycle |
+| Publication, effective, discovery and approval times differ | Store each separately; reproduce what was known at a selected time | More dates to track than a current-rate table |
+| A review can succeed while downstream work crashes | Save approval and the re-evaluation job together; retries avoid duplicate results | Jobs need stored status and recovery controls |
 | Workers can move after a historical work date | Backfill the stored historical employee input and location | Cannot reconstruct dates never observed |
 
 ## What the result means
@@ -30,6 +30,6 @@ There are 121 automated tests plus the executable scenario lab. The oracle indep
 
 Atlas focuses on preserving explainable decisions through corrections, incomplete data and failures. The console makes that workflow easy to inspect; the CLI, exported results and receipts make the claims independently checkable.
 
-Further work includes broader independently labelled publication cases and domain-owner agreement on salary/coverage policy. A broader autonomous agent would not solve the missing salary and coverage authority.
+Further work includes testing more independently labelled publications and confirming salary and coverage policies with a compliance owner.
 
 Read [research](research.md) for source evidence, [README](../README.md) for setup, and [validation](validation.md) for verification results.
