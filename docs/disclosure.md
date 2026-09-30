@@ -24,4 +24,3 @@ Live source approvals are made by the operator. Scripted approvals are labelled 
 - The legacy `demo` command retains a smaller synthetic 14 → 16 case. The complete correction test is `story`, using the included dataset.
 - Optional salary annualization and one-day daily-card validity are declared policies, not facts invented from the sources.
 - Test fixtures and deliberate engine mutations are synthetic. Passing them is not an end-to-end model benchmark.
-
